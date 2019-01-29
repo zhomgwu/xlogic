@@ -41,6 +41,14 @@ void test_add() {
 		std::cout << "************* tick" << tick++ << std::endl;
 		std::this_thread::sleep_for(std::chrono::seconds(5));
 	}
+
+	release_ol_obj(ol_obj4);
+	release_ol_obj(ol_obj3);
+	release_ol_obj(ol_obj2);
+	release_ol_obj(ol_obj1);
+	
+	delete aoi_ctrl;
+	aoi_ctrl = nullptr;
 }
 
 void test_remove() {
@@ -69,6 +77,14 @@ void test_remove() {
 		std::cout << "************* tick" << tick++ << std::endl;
 		std::this_thread::sleep_for(std::chrono::seconds(5));
 	}
+
+	release_ol_obj(ol_obj4);
+	release_ol_obj(ol_obj3);
+	release_ol_obj(ol_obj2);
+	release_ol_obj(ol_obj1);
+	
+	delete aoi_ctrl;
+	aoi_ctrl = nullptr;
 }
 
 void test_move() {
@@ -104,6 +120,14 @@ void test_move() {
 		std::cout << "************* tick" << tick++ << std::endl;
 		std::this_thread::sleep_for(std::chrono::seconds(1));
 	}
+		
+	release_ol_obj(ol_obj4);
+	release_ol_obj(ol_obj3);
+	release_ol_obj(ol_obj2);
+	release_ol_obj(ol_obj1);
+	
+	delete aoi_ctrl;
+	aoi_ctrl = nullptr;
 }
 
 int main(int argc, char *argv[]) {
