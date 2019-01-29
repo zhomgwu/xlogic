@@ -6,9 +6,8 @@
 #include <unordered_map>
 
 #define AOI_MODE_NONE		0
-#define AOI_MODE_NEW 		1
-#define AOI_MODE_REMOVE 	2
-#define AOI_MODE_UPDATE		4
+#define AOI_MODE_REMOVE 	1
+#define AOI_MODE_UPDATE		2
 
 static int32_t dist2(int32_t x1, int32_t y1, int32_t z1, int32_t x2, int32_t y2, int32_t z2) {
 	return (x1-x2)*(x1-x2) + (y1-y2)*(y1-y2) + (z1-z2)*(z1-z2);
@@ -23,18 +22,23 @@ public:
 	virtual int32_t x() const;
 	virtual int32_t y() const;
 	virtual int32_t z() const;
-	virtual void move(int32_t x, int32_t y, int32_t z);
-	virtual void aoi_message(const std::set<aoi_obj *> &objs, int aoi_mode);
+	virtual void set_x(int32_t x);
+	virtual void set_y(int32_t y);
+	virtual void set_z(int32_t z);
+	virtual void set_pos(int32_t x, int32_t y, int32_t z);
 	virtual void set_radius(int32_t radius);
 	virtual bool is_in_view(aoi_obj * obj);
-	virtual bool is_new();
 	virtual bool is_update();
 	virtual bool is_remove();
-	virtual void new_mode();
 	virtual void update_mode();
 	virtual void remove_mode();
+	virtual void set_mode(int mode);
+	virtual void cancel_mode(int mode);
 	virtual void clear_mode();
-	
+	virtual void aoi_message(const std::set<aoi_obj *> &objs);
+
+	virtual void debug_print();
+
 protected:
 	uint64_t m_id;
 	int32_t m_mode;
@@ -50,6 +54,7 @@ public:
 
 	virtual bool aoi_add(aoi_obj * obj) = 0;
 	virtual bool aoi_remove(aoi_obj * obj) = 0;
+	virtual bool aoi_move(aoi_obj * obj, int32_t x, int32_t y, int32_t z) = 0;
 	virtual void aoi_update() = 0;
 };
 
