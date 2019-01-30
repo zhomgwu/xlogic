@@ -1,6 +1,7 @@
 
 #include "aoi_base.h"
 #include <iostream>
+#include <algorithm>
 
 aoi_obj::aoi_obj(uint64_t id)
 :m_id(id)
@@ -101,8 +102,38 @@ void aoi_obj::clear_mode() {
 	m_mode &= AOI_MODE_NONE;
 }
 
-void aoi_obj::aoi_message(const std::set<aoi_obj *> &objs) {
+void aoi_obj::aoi_message(const std::set<uint64_t> &view_ids) {
+	std::set<uint64_t> intersection;
+	std::set<uint64_t> in_set;
+	std::set<uint64_t> out_set;
 
+	std::set_intersection(view_ids.begin(), view_ids.end(), 
+		m_view_ids.begin(), m_view_ids.end(), std::inserter(intersection, intersection.begin()));
+
+	std::set_difference(view_ids.begin(), view_ids.end(), 
+		intersection.begin(), intersection.end(), std::inserter(in_set, in_set.begin()));
+
+	std::set_difference(m_view_ids.begin(), m_view_ids.end(), 
+		intersection.begin(), intersection.end(), std::inserter(out_set, out_set.begin()));	
+	
+	// callback obj in
+	// callback obj out
+	
+	m_view_ids.clear();
+	m_view_ids.insert(view_ids.begin(), view_ids.end());
+
+	std::cout << "**********************************" << std::endl;
+	std::cout << "my_id:" << m_id << std::endl;
+	for (auto & it : view_ids) {
+		std::cout << "view_ids\t" << it << std::endl;	
+	}
+	for (auto & it : in_set) {
+		std::cout << "in_set\t" << it << std::endl;	
+	}
+	for (auto & it : out_set) {
+		std::cout << "out_set\t" << it << std::endl;	
+	}
+	std::cout << "**********************************" << std::endl;
 }
 
 void aoi_obj::debug_print() {

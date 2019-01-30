@@ -90,15 +90,19 @@ void test_remove() {
 void test_move() {
 	aoi_orthogonal_linked *aoi_ctrl = new aoi_orthogonal_linked();
 	
-	aoi_ol_obj *ol_obj1 = create_ol_obj(1, 100, 130);
-	aoi_ol_obj *ol_obj2 = create_ol_obj(2, 110, 120);
-	aoi_ol_obj *ol_obj3 = create_ol_obj(3, 120, 110);
+	aoi_ol_obj *ol_obj1 = create_ol_obj(1, 100, 100);
+	aoi_ol_obj *ol_obj2 = create_ol_obj(2, 110, 100);
+	aoi_ol_obj *ol_obj3 = create_ol_obj(3, 120, 100);
 	aoi_ol_obj *ol_obj4 = create_ol_obj(4, 130, 100);
+	aoi_ol_obj *ol_obj5 = create_ol_obj(5, 150, 100);
+	aoi_ol_obj *ol_obj6 = create_ol_obj(6, 151, 100);
 
 	aoi_ctrl->aoi_add(ol_obj1);
 	aoi_ctrl->aoi_add(ol_obj2);
 	aoi_ctrl->aoi_add(ol_obj3);
 	aoi_ctrl->aoi_add(ol_obj4);
+	aoi_ctrl->aoi_add(ol_obj5);
+	aoi_ctrl->aoi_add(ol_obj6);
 
 	while (true) {
 		static int tick = 0;

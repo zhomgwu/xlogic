@@ -35,7 +35,7 @@ public:
 	virtual void set_mode(int mode);
 	virtual void cancel_mode(int mode);
 	virtual void clear_mode();
-	virtual void aoi_message(const std::set<aoi_obj *> &objs);
+	virtual void aoi_message(const std::set<uint64_t> &view_ids);
 
 	virtual void debug_print();
 
@@ -46,6 +46,7 @@ protected:
 	int32_t m_x;
 	int32_t m_y;
 	int32_t m_z;
+	std::set<uint64_t> m_view_ids;
 };
 
 class aoi_base {

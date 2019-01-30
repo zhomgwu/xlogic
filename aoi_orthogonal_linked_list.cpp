@@ -160,7 +160,7 @@ void aoi_orthogonal_linked::aoi_update() {
 			continue;
 		}
 
-		std::set<aoi_obj *> update_set;
+		std::set<uint64_t> view_set;
 		// traverse mover x prev 
 		aoi_ol_obj *tmp = obj->m_x_prev;
 		while(tmp) {
@@ -168,9 +168,7 @@ void aoi_orthogonal_linked::aoi_update() {
 				// out of sight
 				break;
 			}
-			if (tmp->is_update() || obj->is_update()) {
-				update_set.insert(tmp);
-			}
+			view_set.insert(tmp->id());
 			tmp = tmp->m_x_prev;
 		}
 
@@ -181,9 +179,7 @@ void aoi_orthogonal_linked::aoi_update() {
 				// out of sight
 				break;
 			}
-			if (tmp->is_update() || obj->is_update()) {
-				update_set.insert(tmp);
-			}
+			view_set.insert(tmp->id());
 			tmp = tmp->m_x_next;
 		}
 
@@ -194,9 +190,7 @@ void aoi_orthogonal_linked::aoi_update() {
 				// out of sight
 				break;
 			}
-			if (tmp->is_update() || obj->is_update()) {
-				update_set.insert(tmp);
-			}
+			view_set.insert(tmp->id());
 			tmp = tmp->m_y_prev;
 		}
 
@@ -207,15 +201,12 @@ void aoi_orthogonal_linked::aoi_update() {
 				// out of sight
 				break;
 			}
-			if (tmp->is_update() || obj->is_update()) {
-				update_set.insert(tmp);
-			}
-
+			view_set.insert(tmp->id());
 			tmp = tmp->m_y_next;
 		}
 
-		if (update_set.size() > 0) {
-			obj->aoi_message(update_set);	
+		if (view_set.size() > 0) {
+			obj->aoi_message(view_set);
 		}
 	}
 
