@@ -66,7 +66,7 @@ bool signal_register::init() {
 	return true;
 }
 
-void signal_register::addregister(SignalHandler *handler) {
+void signal_register::register_handler(SignalHandler *handler) {
 	if (m_handlers.find(handler) != m_handlers.end()) {
 		return;
 	}

@@ -21,7 +21,7 @@ public:
 
 	bool init();
 
-	void addregister(signal_handler *handler);
+	void register_handler(signal_handler *handler);
 
 	void unregister(signal_handler *handler);
 

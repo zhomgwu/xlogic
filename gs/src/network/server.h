@@ -1,11 +1,10 @@
 #ifndef __SERVER_H__
 #define __SERVER_H__
 
-struct server_config {	
+struct server_config {
 	uint16_t port;
 	uint16_t max_client;
 };
-
 
 class server {
 public:

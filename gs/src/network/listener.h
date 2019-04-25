@@ -1,12 +1,10 @@
-
 #ifndef __LISTENER_H__
 #define __LISTENER_H__
 
-#include <unordered_map>
-
-class listener_delegate {
+class listener_handler {
 public:
 	virtual void listen_callback(uint32_t fd, void *data, uint32_t len) = 0;
+	virtual void listen_error(int error_no) = 0;
 };
 
 class listener {
@@ -16,15 +14,15 @@ public:
 
 public:
 
-	virtual bool init(uint16_t m_port, listener_delegate *delegate);
+	virtual bool init(uint16_t m_port, listener_handler *handler);
 
-	virtual bool listen();
+	virtual void listen();
 
 	virtual void run_accept();
 
 private:
 	uint16_t m_port;
-	listener_delegate *m_delegate;
+	listener_handler *m_delegate;
 };
 
 #endif // __LISTENER_H__
