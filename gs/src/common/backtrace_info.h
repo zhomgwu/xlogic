@@ -18,12 +18,12 @@
 
 #include <string>
 
-#define BT_STR	backtrack_info::get_backtrace_info()
-
 class backtrack_info
 {
 public:
 	static std::string get_backtrace_info();
 };
+
+#define BT_STR	backtrack_info::get_backtrace_info()
 
 #endif // __BACKTRACE_INFO_H__

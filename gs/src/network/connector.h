@@ -1,6 +1,8 @@
 #ifndef __CONNECTOR_H__
 #define __CONNECTOR_H__
 
+namespace xlogic {
+
 class connector_handler {
 public:
 	virtual void on_connect_success() = 0;
@@ -16,7 +18,7 @@ public:
 
 public:
 
-	virtual bool init(bool block, std::string host, uint32_t port, connector_handler * handler);
+	virtual bool init(struct event_base * base, std::string host, uint32_t port, connector_handler * handler, bool block = false);
 
 	virtual bool connect();
 
@@ -24,7 +26,9 @@ public:
 
 private:
 
-	connector_handler *m_conn_handler;
+	connector_handler * m_conn_handler;
 };
+
+} // namespace xlogic
 
 #endif //__CONNECTOR_H__
