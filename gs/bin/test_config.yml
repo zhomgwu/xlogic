@@ -1,0 +1,7 @@
+# This is used for configurate server parameters
+conn_server :
+  port : 10001
+  max_client : 10
+
+game_server :
+  port : 10002

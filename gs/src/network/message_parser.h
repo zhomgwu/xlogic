@@ -1,6 +1,15 @@
 
 
-template<typename T>
+
+
+class message_dispatcher {
+public:
+    template<typename T>
+    void dispatch(void *data, uint32_t len);
+};
+
+
+template<typename H, typename T>
 class message_parser {
 public:
 	message_parser(void *data, uint32_t length);
@@ -8,8 +17,8 @@ public:
 
 public:
 
-	T* head();
-	void *body();
+	H* head();
+	T *body();
 	uint32_t body_length();
 
 private:

@@ -13,7 +13,7 @@ public:
 	virtual void on_disconnect(agent* ag) = 0;
 };
 
-class listener {
+class listener : public noncopyable  {
 public:
 	listener();
 	virtual ~listener();
