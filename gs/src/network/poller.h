@@ -7,9 +7,13 @@ public:
     ~poller();
 
 public:
+    
     bool init();
+    
     void run();
+    
     void step();
+
     void stop();
 
     struct event_base *get_event_base();

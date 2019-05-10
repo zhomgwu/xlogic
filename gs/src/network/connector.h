@@ -44,6 +44,7 @@ private:
 	connector_handler * 					m_conn_handler;
 	struct event_base *						m_event_base;
 	struct bufferevent * 					m_bufferevent;
+	socket_message *        				m_socket_msg;
 	std::string 							m_host;
 };
 

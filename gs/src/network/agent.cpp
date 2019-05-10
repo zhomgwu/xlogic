@@ -1,28 +1,28 @@
 #include "agent.h"
 
 agent::agent(struct bufferevent *bev)
-: m_recv_buffer(nullptr) 
-, m_recv_length(0) 
-, m_recv_buffer_size(0)
+: m_socket_msg(nullptr)
 , m_bufferevent(bev) {
-	m_recv_buffer = (char *)malloc(DEFAULT_RECV_BUFFER_SIZE);
-	m_recv_buffer_size = DEFAULT_RECV_BUFFER_SIZE;
+	m_socket_msg = new socket_message();
 }
 
 agent::~agent() {
-	if (m_recv_buffer) {
-		delete m_recv_buffer;
-		m_recv_buffer = nullptr;
+	if (m_socket_msg) {
+		delete m_socket_msg;
+		m_socket_msg = nullptr;
 	}
 }
 
 void agent::do_recv() {
-	if (bufferevent) {
-		size_t recv = 0;
-		recv = bufferevent_read(m_bufferevent, m_recv_buffer+m_recv_length, m_recv_buffer_size-m_recv_length);
-		
-		
+	if (m_bufferevent) {
+		size_t recv_length = 0;
+		size_t recv_data_size = 4096;
+		void *recv_data = malloc(recv_data_size);
+		recv_length = bufferevent_read(m_bufferevent, recv_data, recv_data_size);
 
+		m_socket_msg->append(recv_data, recv_length);
+
+		free(recv_data);
 	}
 }
 

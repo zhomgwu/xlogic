@@ -4,12 +4,16 @@ connector::connector()
 : m_port(0)
 , m_conn_handler(nullptr)
 , m_event_base(nullptr)
+, m_socket_msg(nullptr)
 , m_bufferevent(nullptr) {
-
+    m_socket_msg = new socket_message();
 }
 
 connector::~connector() {
-
+    if (m_socket_msg) {
+        delete m_socket_msg;
+        m_socket_msg = nullptr;
+    }
 }
 
 bool connector::init(struct event_base * base, std::string host, uint32_t port, connector_handler * handler) {
@@ -65,7 +69,16 @@ void connector::send(void *data, uint32_t length) {
 }
 
 void connector::do_recv() {
+    if (m_bufferevent) {
+        size_t recv_length = 0;
+        size_t recv_data_size = 4096;
+        void *recv_data = malloc(recv_data_size);
+        recv_length = bufferevent_read(m_bufferevent, recv_data, recv_data_size);
 
+        m_socket_msg->append(recv_data, recv_length);
+
+        free(recv_data);
+    }
 }
 
 connector_handler * connector::get_handler() {

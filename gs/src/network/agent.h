@@ -5,8 +5,7 @@
 
 namespace xlogic {
 
-#define DEFAULT_RECV_BUFFER_SIZE   65535
-
+class socket_message;
 class agent : public noncopyable {
 public:
 	agent(struct bufferevent *bev);
@@ -22,9 +21,7 @@ public:
 
 private:
 
-	char *					m_recv_buffer;
-	uint32_t 				m_recv_length;
-	uint32_t 				m_recv_buffer_size;
+    socket_message *        m_socket_msg;
 	struct bufferevent *	m_bufferevent;
 };
 
