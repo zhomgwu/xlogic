@@ -25,9 +25,6 @@ bool listener::init(struct event_base * base, uint16_t port, listener_handler *h
 	if (handler) {
 		m_handler = handler;
 	}
-	if (se_inspector) {
-		m_se_inspector = se_inspector;
-	}
 	return true;
 }
 
