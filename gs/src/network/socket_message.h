@@ -21,7 +21,7 @@ public:
     bool get_data(void *dst, uint32_t len);
 
     template<typename T>
-    bool try_parse(T *dst);
+    T * try_parse();
 
 private:
 
