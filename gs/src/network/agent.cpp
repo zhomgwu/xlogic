@@ -36,3 +36,7 @@ bool agent::send(void * data, uint32_t len) {
 struct bufferevent * agent::get_bufferevent() {
 	return m_bufferevent;
 }
+
+socket_message * agent::get_socket_message() {
+	return m_socket_msg;
+}

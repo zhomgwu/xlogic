@@ -17,7 +17,9 @@ public:
 
 	virtual bool send(void * data, uint32_t len);
 
-	struct bufferevent * get_bufferevent() final;
+	struct bufferevent * get_bufferevent();
+
+    socket_message * get_socket_message();
 
 private:
 

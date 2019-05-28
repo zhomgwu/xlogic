@@ -1,12 +1,14 @@
 #include "socket_message.h"
 #include <cstring>
 
-#define MIN_SOCKET_BUFFER_SIZE 64
+#define MIN_BUFFER_SIZE         64
+
+#define SHRINK_BUFFER_SIZE      32768
 
 socket_message::socket_message()
 : m_data(nullptr) 
 , m_length(0)
-, m_size(MIN_SOCKET_BUFFER_SIZE) {
+, m_size(MIN_BUFFER_SIZE) {
     m_data = malloc(m_size);
 }
 
@@ -31,7 +33,7 @@ uint32_t socket_message::length() {
 
 void socket_message::append(void *data, uint32_t len) {
     uint32_t need_size = m_length + len;
-    if (check_size(need_size)) {
+    if (!check_size(need_size)) {
         // log size not enough here
         return;
     }
@@ -58,8 +60,9 @@ bool socket_message::check_size(uint32_t size) {
         }
         while(size > m_size);
     }
-    else if (size > 0 && size*2 < m_size){
-        m_size /=2;
+    else if (m_size > SHRINK_BUFFER_SIZE && size*2 < m_size) {
+        // shrink m_size if m_size larger than SHRINK_BUFFER_SIZE
+        m_size /= 2;
     }
     else {
         return true;

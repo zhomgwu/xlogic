@@ -10,8 +10,7 @@ listener::~listener() {
 
 }
 
-bool listener::init(struct event_base * base, uint16_t port, listener_handler *handler, 
-	listener_security_inspector * se_inspector) {
+bool listener::init(struct event_base * base, uint16_t port, listener_handler *handler) {
 	if (!base) {
 		return false;
 	}

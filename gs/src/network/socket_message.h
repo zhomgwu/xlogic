@@ -20,6 +20,9 @@ public:
 
     bool get_data(void *dst, uint32_t len);
 
+    template<typename T>
+    bool try_parse(T *dst);
+
 private:
 
     bool check_size(uint32_t size);

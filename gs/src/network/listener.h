@@ -41,7 +41,7 @@ private:
 
 	static void conn_writecb(struct bufferevent *bev, void *user_data);
 
-	static void conn_eventcb(struct bufferevent *bev, short events, void *user_data)
+	static void conn_eventcb(struct bufferevent *bev, short events, void *user_data);
 
 private:
 
