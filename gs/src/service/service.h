@@ -1,11 +1,11 @@
 #ifndef __SERVICE_H__
 #define __SERVICE_H__
 
-class work_dispatcher;
 class service {
 public:
-    bool init(work_dispatcher *dispatcher) = 0;
-    void handle(void *data, int len, void *userdata) = 0;
+    bool service_init() = 0;
+    void service_run() = 0;
+    void service_exit() = 0;
 };
 
 #endif //__SERVICE_H__

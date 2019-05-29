@@ -2,7 +2,6 @@
 #include <cstring>
 
 #define MIN_BUFFER_SIZE         64
-
 #define SHRINK_BUFFER_SIZE      32768
 
 socket_message::socket_message()
@@ -61,7 +60,7 @@ bool socket_message::check_size(uint32_t size) {
         while(size > m_size);
     }
     else if (m_size > SHRINK_BUFFER_SIZE && size*2 < m_size) {
-        // shrink m_size if m_size larger than SHRINK_BUFFER_SIZE
+        // shrink m_size in case larger than SHRINK_BUFFER_SIZE
         m_size /= 2;
     }
     else {

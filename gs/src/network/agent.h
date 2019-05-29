@@ -22,7 +22,7 @@ public:
     socket_message * get_socket_message();
 
 private:
-
+    char *                  m_buffer_read;
     socket_message *        m_socket_msg;
 	struct bufferevent *	m_bufferevent;
 };

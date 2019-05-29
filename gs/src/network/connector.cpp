@@ -1,11 +1,15 @@
 #include "connector.h"
 
+#define RECV_BUFFER_SIZE 4096
+
 connector::connector()
-: m_port(0)
+: m_buffer_read(nullptr)
+, m_port(0)
 , m_conn_handler(nullptr)
 , m_event_base(nullptr)
 , m_socket_msg(nullptr)
 , m_bufferevent(nullptr) {
+    m_buffer_read = (char*)malloc(RECV_BUFFER_SIZE);
     m_socket_msg = new socket_message();
 }
 
@@ -71,13 +75,10 @@ void connector::send(void *data, uint32_t length) {
 void connector::do_recv() {
     if (m_bufferevent) {
         size_t recv_length = 0;
-        size_t recv_data_size = 4096;
-        void *recv_data = malloc(recv_data_size);
-        recv_length = bufferevent_read(m_bufferevent, recv_data, recv_data_size);
-
-        m_socket_msg->append(recv_data, recv_length);
-
-        free(recv_data);
+        recv_length = bufferevent_read(m_bufferevent, m_buffer_read, RECV_BUFFER_SIZE);
+        if (recv_length > 0) {
+            m_socket_msg->append(m_buffer_read, recv_length);   
+        }
     }
 }
 

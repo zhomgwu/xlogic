@@ -40,6 +40,7 @@ private:
 
 private:
 
+	char *                  				m_buffer_read;
 	uint32_t 								m_port;	
 	connector_handler * 					m_conn_handler;
 	struct event_base *						m_event_base;
