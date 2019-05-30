@@ -11,6 +11,7 @@ public:
 	virtual void on_message(void * data, uint32_t length) = 0;
 };
 
+class message_processor;
 class connector : public noncopyable {
 public:
 	connector();
@@ -45,7 +46,7 @@ private:
 	connector_handler * 					m_conn_handler;
 	struct event_base *						m_event_base;
 	struct bufferevent * 					m_bufferevent;
-	socket_message *        				m_socket_msg;
+	message_processor *        				m_msg_proc;
 	std::string 							m_host;
 };
 

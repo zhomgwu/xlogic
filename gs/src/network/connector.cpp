@@ -7,16 +7,16 @@ connector::connector()
 , m_port(0)
 , m_conn_handler(nullptr)
 , m_event_base(nullptr)
-, m_socket_msg(nullptr)
+, m_msg_proc(nullptr)
 , m_bufferevent(nullptr) {
     m_buffer_read = (char*)malloc(RECV_BUFFER_SIZE);
-    m_socket_msg = new socket_message();
+    m_msg_proc = new socket_message();
 }
 
 connector::~connector() {
-    if (m_socket_msg) {
-        delete m_socket_msg;
-        m_socket_msg = nullptr;
+    if (m_msg_proc) {
+        delete m_msg_proc;
+        m_msg_proc = nullptr;
     }
 }
 
@@ -77,7 +77,7 @@ void connector::do_recv() {
         size_t recv_length = 0;
         recv_length = bufferevent_read(m_bufferevent, m_buffer_read, RECV_BUFFER_SIZE);
         if (recv_length > 0) {
-            m_socket_msg->append(m_buffer_read, recv_length);   
+            m_msg_proc->append(m_buffer_read, recv_length);   
         }
     }
 }

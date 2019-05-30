@@ -5,7 +5,7 @@
 
 namespace xlogic {
 
-class socket_message;
+class message_processor;
 class agent : public noncopyable {
 public:
 	agent(struct bufferevent *bev);
@@ -19,11 +19,11 @@ public:
 
 	struct bufferevent * get_bufferevent();
 
-    socket_message * get_socket_message();
+    message_processor * get_socket_message_processor();
 
 private:
     char *                  m_buffer_read;
-    socket_message *        m_socket_msg;
+    message_processor *     m_msg_proc;
 	struct bufferevent *	m_bufferevent;
 };
 

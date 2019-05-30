@@ -4,10 +4,10 @@
 
 agent::agent(struct bufferevent *bev)
 : m_buffer_read(nullptr)
-, m_socket_msg(nullptr)
+, m_msg_proc(nullptr)
 , m_bufferevent(bev) {
 	m_buffer_read = (char *)malloc(RECV_BUFFER_SIZE);
-	m_socket_msg = new socket_message();
+	m_msg_proc = new socket_message();
 }
 
 agent::~agent() {
@@ -16,9 +16,9 @@ agent::~agent() {
 		m_buffer_read = nullptr;
 	}
 
-	if (m_socket_msg) {
-		delete m_socket_msg;
-		m_socket_msg = nullptr;
+	if (m_msg_proc) {
+		delete m_msg_proc;
+		m_msg_proc = nullptr;
 	}
 }
 
@@ -27,7 +27,7 @@ void agent::do_recv() {
 		size_t recv_length = 0;
 		recv_length = bufferevent_read(m_bufferevent, m_buffer_read, RECV_BUFFER_SIZE);
 		if (recv_length > 0) {
-			m_socket_msg->append(m_buffer_read, recv_length);	
+			m_msg_proc->append(m_buffer_read, recv_length);	
 		}
 	}
 }
@@ -43,6 +43,6 @@ struct bufferevent * agent::get_bufferevent() {
 	return m_bufferevent;
 }
 
-socket_message * agent::get_socket_message() {
-	return m_socket_msg;
+message_processor * agent::get_message_processor() {
+	return m_msg_proc;
 }
