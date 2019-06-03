@@ -6,7 +6,6 @@
 namespace xlogic {
 
 struct socket_message {
-    uint32_t session_id;
     void *data;
     uint32_t length;
 };
@@ -22,7 +21,7 @@ public:
     static socket_message_queue *get_instance();
     static void destroy();
 
-    static socket_message * new_socket_message();
+    static socket_message * new_socket_message(void *data, uint32_t length);
     static void delete_socket_message(socket_message * msg);
 
     void push(socket_message * msg);

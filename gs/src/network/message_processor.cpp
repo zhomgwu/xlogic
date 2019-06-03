@@ -58,10 +58,7 @@ void message_processor::append(void *data, uint32_t len) {
             break;
         }
         // 分离单个消息
-        socket_message * msg = socket_message_queue::new_socket_message();
-        msg->data = malloc(msg_len);
-        msg->length = msg_len;
-        memcpy(msg->data, m_data+offset, msg_len);
+        socket_message * msg = socket_message_queue::new_socket_message(m_data+offset, msg_len);
         queue->push(msg);
         
         m_length -= msg_len;
