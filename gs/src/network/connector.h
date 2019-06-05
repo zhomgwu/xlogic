@@ -29,6 +29,8 @@ public:
 
 	virtual void do_recv();
 
+	bool is_connecting();
+
 	connector_handler * get_handler();
 
 private:
@@ -43,6 +45,7 @@ private:
 
 	char *                  				m_buffer_read;
 	uint32_t 								m_port;	
+	bool 									m_is_connecting;
 	connector_handler * 					m_conn_handler;
 	struct event_base *						m_event_base;
 	struct bufferevent * 					m_bufferevent;

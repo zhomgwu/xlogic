@@ -23,6 +23,21 @@ void socket_message_queue::destroy() {
     }
 }
 
+socket_message * socket_message_queue::new_socket_message(void *data, uint32_t length) {
+    socket_message * msg = (socket_message * )malloc(sizeof(socket_message));
+    msg->data = malloc(length);
+    msg->length = length;
+    memcpy(msg->data, data, length);
+}
+
+void socket_message_queue::delete_socket_message(socket_message * msg) {
+    if (msg) {
+        if (msg->data)
+            free(msg->data);
+        free(msg);
+    }
+}
+
 void socket_message_queue::push(socket_message * msg) {
     m_messages.push(msg);
 }

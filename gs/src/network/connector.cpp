@@ -5,6 +5,7 @@
 connector::connector()
 : m_buffer_read(nullptr)
 , m_port(0)
+, m_is_connecting(false)
 , m_conn_handler(nullptr)
 , m_event_base(nullptr)
 , m_msg_proc(nullptr)
@@ -47,14 +48,15 @@ bool connector::connect(uint32_t timeout) {
     if (!m_bufferevent) {
         return false;
     }
-
-    if (bufferevent_socket_connect(m_bufferevent, (struct sockaddr *)&sin, sizeof(sin))!= 0) {
+    
+    bufferevent_setcb(m_bufferevent, connector::conn_readcb, connector::conn_writecb, connector::conn_eventcb, (void*)this)
+    bufferevent_enable(bev, EV_READ | EV_WRITE);
+    
+    if (bufferevent_socket_connect(m_bufferevent, (struct sockaddr *)&sin, sizeof(sin)) != 0) {
         bufferevent_free(m_bufferevent);
         return false;
     }
 
-    bufferevent_setcb(m_bufferevent, connector::conn_readcb, connector::conn_writecb, connector::conn_eventcb, (void*)this)
-    bufferevent_enable(bev, EV_READ | EV_WRITE);
     return true;
 }
 
@@ -82,6 +84,10 @@ void connector::do_recv() {
     }
 }
 
+bool connector::is_connecting() {
+    return m_is_connecting;
+}
+
 connector_handler * connector::get_handler() {
     return m_conn_handler;
 }
@@ -105,10 +111,12 @@ void connector::conn_eventcb(struct bufferevent *bev, short events, void *user_d
     }
     else if (events & BEV_EVENT_ERROR) {
         if (handler) {
-            handler->on_connect_fail();
-        }
-        else {
-            handler->on_disconnect();
+            if (handler->is_connecting()) {
+                handler->on_connect_fail();
+            }
+            else {
+                handler->on_disconnect();
+            }
         }
     }
     else if ( events & BEV_EVENT_EOF) {
