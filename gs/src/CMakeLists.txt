@@ -13,5 +13,7 @@ AUX_SOURCE_DIRECTORY(. SRC)
 
 ADD_EXECUTABLE(xlogic_gs ${COMMON_SRC} ${NETWORK_SRC} ${SRC})
 
-
+target_link_libraries(
+ libevent.a
+)
 

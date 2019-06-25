@@ -1,6 +1,13 @@
 #include "agent.h"
 #include <stdlib.h>
-#include "event2/bufferevent.h"
+
+#include <event2/bufferevent.h>
+#include <event2/buffer.h>
+#include <event2/util.h> 
+#include <event2/event.h>
+#include <event2/dns.h>
+#include <event2/event_struct.h>
+
 #include "message_processor.h"
 
 #define RECV_BUFFER_SIZE 4096
