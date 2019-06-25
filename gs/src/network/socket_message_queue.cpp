@@ -1,4 +1,8 @@
 #include "socket_message_queue.h"
+#include <stdlib.h>
+#include <string.h>
+
+XLOGIC_BEGIN
 
 socket_message_queue::socket_message_queue() {
 
@@ -28,6 +32,7 @@ socket_message * socket_message_queue::new_socket_message(void *data, uint32_t l
     msg->data = malloc(length);
     msg->length = length;
     memcpy(msg->data, data, length);
+    return msg;
 }
 
 void socket_message_queue::delete_socket_message(socket_message * msg) {
@@ -43,7 +48,7 @@ void socket_message_queue::push(socket_message * msg) {
 }
 
 socket_message * socket_message_queue::pop() {
-    socket_message * message = m_messsages.front();
+    socket_message * message = m_messages.front();
     m_messages.pop();
     return message;
 }
@@ -55,3 +60,5 @@ std::queue<socket_message *> & socket_message_queue::get_messages() {
 uint32_t socket_message_queue::message_count() {
     return m_messages.size();
 }
+
+XLOGIC_END

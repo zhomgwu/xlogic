@@ -1,7 +1,13 @@
 #ifndef __CONNECTOR_H__
 #define __CONNECTOR_H__
 
-namespace xlogic {
+#include <string>
+#include "event2/bufferevent.h"
+#include "event2/event.h"
+#include "type_def.h"
+#include "noncopyable.h"
+
+XLOGIC_BEGIN
 
 class connector_handler {
 public:
@@ -25,7 +31,7 @@ public:
 
 	virtual void close();
 
-	virtual void send(void *data, uint32_t length);
+	virtual bool send(void *data, uint32_t length);
 
 	virtual void do_recv();
 
@@ -39,7 +45,7 @@ private:
 
 	static void conn_writecb(struct bufferevent *bev, void *user_data);
 
-	static void conn_eventcb(struct bufferevent *bev, short events, void *user_data)
+	static void conn_eventcb(struct bufferevent *bev, short events, void *user_data);
 
 private:
 
@@ -53,6 +59,6 @@ private:
 	std::string 							m_host;
 };
 
-} // namespace xlogic
+XLOGIC_END
 
 #endif //__CONNECTOR_H__

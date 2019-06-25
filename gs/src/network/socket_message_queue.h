@@ -3,7 +3,10 @@
 
 #include <queue>
 
-namespace xlogic {
+#include "type_def.h"
+#include "noncopyable.h"
+
+XLOGIC_BEGIN
 
 struct socket_message {
     void *data;
@@ -11,7 +14,7 @@ struct socket_message {
 };
 
 // 消息队列，主要是对消息统一存放，方便支持多线程
-class socket_message_queue {
+class socket_message_queue : public noncopyable {
 public:
     socket_message_queue();
     ~socket_message_queue();
@@ -34,9 +37,10 @@ public:
 
 private:
 
-    static socket_message_queue *m_instance;
+    static socket_message_queue * m_instance;
     std::queue<socket_message *>  m_messages;
 };
 
-}
+XLOGIC_END
+
 #endif //__SOCKET_MESSAGE_QUEUE_H__

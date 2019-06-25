@@ -4,7 +4,7 @@
 #include <stdint.h>
 
 #ifndef XLOGIC_BEGIN
-#define XLOGIC_BEGIN namespace {
+#define XLOGIC_BEGIN namespace xlogic {
 #endif 
 
 #ifndef XLOGIC_END

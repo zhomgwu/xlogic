@@ -1,6 +1,8 @@
 #include "message_processor.h"
-#include <cstring>
+#include <string.h>
+#include <stdlib.h>
 #include "socket_message_queue.h"
+#include "server_message.h"
 
 #define MIN_BUFFER_SIZE         64
 #define SHRINK_BUFFER_SIZE      32768
@@ -11,7 +13,7 @@ message_processor::message_processor()
 : m_data(nullptr) 
 , m_length(0)
 , m_size(MIN_BUFFER_SIZE) {
-    m_data = malloc(m_size);
+    m_data = (char *)malloc(m_size);
 }
 
 message_processor::~message_processor() {
@@ -98,7 +100,7 @@ bool message_processor::check_size(uint32_t size) {
         return true;
     }
 
-    void *new_ptr = realloc(m_data, m_size)
+    char *new_ptr = (char *)realloc(m_data, m_size);
     if (nullptr != new_ptr) {
         m_data = new_ptr;
         return true;

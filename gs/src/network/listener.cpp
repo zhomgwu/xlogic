@@ -1,4 +1,8 @@
 #include "listener.h"
+#include <string.h>
+#include "agent.h"
+
+XLOGIC_BEGIN
 
 listener::listener() 
 : m_port(0)
@@ -128,3 +132,4 @@ void listener::conn_eventcb(struct bufferevent *bev, short events, void *user_da
 	}
 }
 
+XLOGIC_END

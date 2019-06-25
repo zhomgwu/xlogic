@@ -1,7 +1,14 @@
 #ifndef __POLLER_H__
 #define __POLLER_H__
 
-class poller {
+#include "event2/bufferevent.h"
+#include "event2/event.h"
+#include "type_def.h"
+#include "noncopyable.h"
+
+XLOGIC_BEGIN
+
+class poller : public noncopyable {
 public:
     poller();
     ~poller();
@@ -22,5 +29,7 @@ private:
 
     struct event_base * m_evbase;
 };
+
+XLOGIC_END
 
 #endif //__POLLER_H__

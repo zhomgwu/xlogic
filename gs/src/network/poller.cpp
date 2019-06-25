@@ -1,5 +1,7 @@
 #include "poller.h"
 
+XLOGIC_BEGIN
+
 poller::poller() 
 : m_evbase(nullptr) {
 
@@ -41,3 +43,5 @@ void poller::stop() {
 struct event_base *poller::get_event_base() {
     return m_evbase;
 }
+
+XLOGIC_END

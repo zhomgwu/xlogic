@@ -1,0 +1,7 @@
+
+
+
+INCLUDE_DIRECTORIES(common)
+INCLUDE_DIRECTORIES(network)
+INCLUDE_DIRECTORIES(${THIRDPARTY}/libevent-2.1.8-stable/include)
+INCLUDE_DIRECTORIES(${THIRDPARTY}/yaml-cpp/include)

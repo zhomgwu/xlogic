@@ -1,9 +1,13 @@
 #ifndef __LISTENER_H__
 #define __LISTENER_H__
 
-#include <event2/listener.h>
+#include <map>
+#include "event2/listener.h"
+#include "event2/bufferevent.h"
+#include "type_def.h"
+#include "noncopyable.h"
 
-namespace xlogic {
+XLOGIC_BEGIN
 
 class agent;
 class listener_handler {
@@ -52,6 +56,6 @@ private:
 	std::map<struct bufferevent *, agent*> 	m_agents;
 };
 
-}; // namespace xlogic
+XLOGIC_END
 
 #endif // __LISTENER_H__

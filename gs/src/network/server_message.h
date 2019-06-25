@@ -1,6 +1,8 @@
 #ifndef __SERVER_MESSAGE_H__
 #define __SERVER_MESSAGE_H__
 
+#include "type_def.h"
+
 enum INNER_MESSAGE {
     INNER_NULL                  = 0,        // 无
     INNER_SOCK_NEW              = 1,        // 新连接
@@ -56,9 +58,9 @@ struct message_sock_auth : public message_head {
     }
 
     void set_user_info(uint64_t user_id, uint64_t player_id, uint32_t session_id) {
-        user_info.user_id = user_id;
-        user_info.player_id = player_id;
-        user_info.session_id = session_id;
+        usr_info.user_id = user_id;
+        usr_info.player_id = player_id;
+        usr_info.session_id = session_id;
     }
 };
 

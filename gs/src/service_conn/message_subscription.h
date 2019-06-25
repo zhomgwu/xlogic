@@ -4,6 +4,8 @@
 #include <multi_map>
 #include <vector>
 
+#include "type_def.h"
+
 // 管理消息订阅，其他服务器会向连接服订阅消息，连接服会根据订阅的情况向对应的服务器转发消息
 class message_subscription {
 private:

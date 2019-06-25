@@ -3,7 +3,7 @@
 
 #include "listener.h"
 
-namespace xlogic {
+XLOGIC_BEGIN
 
 enum SERVER_TYPE {
     SERVER_TYPE_NULL = 0,
@@ -33,6 +33,6 @@ private:
     std::string m_authorize_host;           // 授权ip地址，如果设置则只允许对应的ip，否则不限制
 };
 
-}
+XLOGIC_END
 
 #endif //__INNER_LISTENER_H__

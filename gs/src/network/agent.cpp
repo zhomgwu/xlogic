@@ -1,13 +1,5 @@
 #include "agent.h"
 #include <stdlib.h>
-
-#include <event2/bufferevent.h>
-#include <event2/buffer.h>
-#include <event2/util.h> 
-#include <event2/event.h>
-#include <event2/dns.h>
-#include <event2/event_struct.h>
-
 #include "message_processor.h"
 
 #define RECV_BUFFER_SIZE 4096
@@ -55,7 +47,7 @@ struct bufferevent * agent::get_bufferevent() {
 	return m_bufferevent;
 }
 
-message_processor * agent::get_message_processor() {
+message_processor * agent::get_socket_message_processor() {
 	return m_msg_proc;
 }
 

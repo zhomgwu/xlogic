@@ -1,6 +1,15 @@
 #include "connector.h"
+#include "message_processor.h"
+
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <netinet/ip.h> 
+#include <arpa/inet.h>
+#include <string.h>
 
 #define RECV_BUFFER_SIZE 4096
+
+XLOGIC_BEGIN
 
 connector::connector()
 : m_buffer_read(nullptr)
@@ -11,7 +20,7 @@ connector::connector()
 , m_msg_proc(nullptr)
 , m_bufferevent(nullptr) {
     m_buffer_read = (char*)malloc(RECV_BUFFER_SIZE);
-    m_msg_proc = new socket_message();
+    m_msg_proc = new message_processor();
 }
 
 connector::~connector() {
@@ -38,7 +47,7 @@ bool connector::connect(uint32_t timeout) {
     struct sockaddr_in sin;
     memset(&sin, 0, sizeof(sin));
     sin.sin_family = AF_INET;
-    sin.sin_port = htons(m_host);
+    sin.sin_port = htons(m_port);
 
     if (inet_pton(AF_INET, m_host.c_str(), &sin.sin_addr) < 0) {
         return false;
@@ -49,8 +58,8 @@ bool connector::connect(uint32_t timeout) {
         return false;
     }
     
-    bufferevent_setcb(m_bufferevent, connector::conn_readcb, connector::conn_writecb, connector::conn_eventcb, (void*)this)
-    bufferevent_enable(bev, EV_READ | EV_WRITE);
+    bufferevent_setcb(m_bufferevent, connector::conn_readcb, connector::conn_writecb, connector::conn_eventcb, (void*)this);
+    bufferevent_enable(m_bufferevent, EV_READ | EV_WRITE);
     
     if (bufferevent_socket_connect(m_bufferevent, (struct sockaddr *)&sin, sizeof(sin)) != 0) {
         bufferevent_free(m_bufferevent);
@@ -67,7 +76,7 @@ void connector::close() {
     }
 }
 
-void connector::send(void *data, uint32_t length) {
+bool connector::send(void *data, uint32_t length) {
     if (0 != bufferevent_write(m_bufferevent, data, length)) {
         return false;
     }
@@ -111,7 +120,7 @@ void connector::conn_eventcb(struct bufferevent *bev, short events, void *user_d
     }
     else if (events & BEV_EVENT_ERROR) {
         if (handler) {
-            if (handler->is_connecting()) {
+            if (conn->is_connecting()) {
                 handler->on_connect_fail();
             }
             else {
@@ -125,3 +134,5 @@ void connector::conn_eventcb(struct bufferevent *bev, short events, void *user_d
         }
     }
 }
+
+XLOGIC_END

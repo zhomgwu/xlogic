@@ -1,8 +1,10 @@
 #include "server_message.h"
+#include <stdlib.h>
+#include <string.h>
 
 static message_sock_new * make_message_sock_new(uint32_t session_id) {
     uint32_t length = sizeof(message_sock_new);
-    message_sock_new * msg = malloc(length);
+    message_sock_new * msg = (message_sock_new *)malloc(length);
     msg->length = length;
     msg->session_id = session_id;
     return msg;

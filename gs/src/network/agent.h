@@ -3,6 +3,7 @@
 
 #include "noncopyable.h"
 #include "type_def.h"
+#include "event2/bufferevent.h"
 
 XLOGIC_BEGIN
 

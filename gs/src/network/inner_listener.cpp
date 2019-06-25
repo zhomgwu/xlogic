@@ -1,4 +1,7 @@
 #include "inner_listener.h"
+#include <netinet/in.h>
+
+XLOGIC_BEGIN
 
 inner_listener::inner_listener() 
 : m_peer_srv_type(SERVER_TYPE_NULL)
@@ -25,7 +28,8 @@ bool inner_listener::check_address(struct sockaddr *sa, int socklen) {
     }
     if (m_authorize_host != "") {
         char coming_addr[INET_ADDRSTRLEN] = {};
-        evutil_inet_ntop(AF_INET, sa->sin_addr, coming_addr, sizeof(coming_addr));    
+        struct sockaddr_in *sai = (struct sockaddr_in *)sa;
+        evutil_inet_ntop(AF_INET, &sai->sin_addr, coming_addr, sizeof(coming_addr));    
         if (m_authorize_host != coming_addr) {
             return false;
         }
@@ -44,3 +48,5 @@ void inner_listener::on_disconnect(agent* ag) {
         m_peer_srv_agent = nullptr;
     }
 }
+
+XLOGIC_END

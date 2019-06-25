@@ -2,6 +2,7 @@
 #define __MESSAGE_PROCESSOR_H__
 
 #include <type_traits>
+#include "type_def.h"
 #include "noncopyable.h"
 
 XLOGIC_BEGIN
@@ -39,7 +40,7 @@ private:
     bool check_size(uint32_t size);
 
 private:
-    void *          m_data;
+    char *          m_data;
     uint32_t        m_length;
     uint32_t        m_size;
 };
