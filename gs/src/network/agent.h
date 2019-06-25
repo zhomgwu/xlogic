@@ -2,8 +2,9 @@
 #define __AGENT_H__
 
 #include "noncopyable.h"
+#include "type_def.h"
 
-namespace xlogic {
+XLOGIC_BEGIN
 
 class message_processor;
 class agent : public noncopyable {
@@ -27,6 +28,6 @@ private:
 	struct bufferevent *	m_bufferevent;
 };
 
-} // namespace xlogic
+XLOGIC_END
 
 #endif // __AGENT_H__

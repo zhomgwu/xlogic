@@ -43,10 +43,12 @@ void socket_message_queue::push(socket_message * msg) {
 }
 
 socket_message * socket_message_queue::pop() {
-    return m_messages.pop();
+    socket_message * message = m_messsages.front();
+    m_messages.pop();
+    return message;
 }
 
-std::queue<socket_message *> & get_messages() {
+std::queue<socket_message *> & socket_message_queue::get_messages() {
     return m_messages;
 }
 

@@ -4,7 +4,7 @@
 #include <type_traits>
 #include "noncopyable.h"
 
-namespace xlogic {
+XLOGIC_BEGIN
 
 class message_processor : public noncopyable {
 public:
@@ -44,6 +44,6 @@ private:
     uint32_t        m_size;
 };
 
-}
+XLOGIC_END
 
 #endif // __MESSAGE_PROCESSOR_H__

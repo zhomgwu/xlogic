@@ -27,8 +27,6 @@ public:
 
 	std::set<signal_handler *>& get_handlers();
 
-	static void signal_handler(int signo);
-
 private:
 	static signal_register * m_instance;
 	std::set<signal_handler *>  m_handlers;

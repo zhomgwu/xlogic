@@ -1,13 +1,18 @@
 #include "agent.h"
+#include <stdlib.h>
+#include "event2/bufferevent.h"
+#include "message_processor.h"
 
 #define RECV_BUFFER_SIZE 4096
+
+XLOGIC_BEGIN
 
 agent::agent(struct bufferevent *bev)
 : m_buffer_read(nullptr)
 , m_msg_proc(nullptr)
 , m_bufferevent(bev) {
 	m_buffer_read = (char *)malloc(RECV_BUFFER_SIZE);
-	m_msg_proc = new socket_message();
+	m_msg_proc = new message_processor();
 }
 
 agent::~agent() {
@@ -46,3 +51,5 @@ struct bufferevent * agent::get_bufferevent() {
 message_processor * agent::get_message_processor() {
 	return m_msg_proc;
 }
+
+XLOGIC_END

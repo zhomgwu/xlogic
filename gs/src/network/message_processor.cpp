@@ -5,6 +5,8 @@
 #define MIN_BUFFER_SIZE         64
 #define SHRINK_BUFFER_SIZE      32768
 
+XLOGIC_BEGIN
+
 message_processor::message_processor()
 : m_data(nullptr) 
 , m_length(0)
@@ -103,3 +105,5 @@ bool message_processor::check_size(uint32_t size) {
     }
     return false;
 }
+
+XLOGIC_END
