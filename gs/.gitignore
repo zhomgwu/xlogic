@@ -2,3 +2,8 @@
 build/
 third_party/*
 third_party/*.*
+bin/conn_srv
+bin/game_srv
+bin/db_srv
+*.log
+*.a

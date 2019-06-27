@@ -1,3 +1,4 @@
+#include "message_subscription.h"
 
 message_subscription::message_subscription() {
 
@@ -7,7 +8,7 @@ message_subscription::~message_subscription() {
 
 }
 
-static message_subscription * message_subscription::m_instance = nullptr;
+message_subscription * message_subscription::m_instance = nullptr;
 message_subscription * message_subscription::get_instance() {
     if (!m_instance) {
         m_instance = new message_subscription();
@@ -44,7 +45,7 @@ void message_subscription::unsubscribe(agent *ag) {
     auto pos = m_subscription.begin();
     while(pos != m_subscription.end()) {
         if (pos->second == ag) {
-            pos = m_subscription.erase(msg_id);
+            pos = m_subscription.erase(pos);
         }
         else {
             pos++;
@@ -52,10 +53,9 @@ void message_subscription::unsubscribe(agent *ag) {
     }
 }
 
-void message_subscription::get_subscription(uint32_t msg_id, std::vector<agent *> &agents);{
+void message_subscription::get_subscription(uint32_t msg_id, std::vector<agent *> &agents) {
     auto pos_range = m_subscription.equal_range(msg_id);
-    while (pos_range->first != pos_range->second) {
-        agents.push_back(pos_range->second);
-        pos_range++;
+    for (auto i = pos_range.first; i != pos_range.second; ++i) {
+        agents.push_back(i->second);
     }
 }

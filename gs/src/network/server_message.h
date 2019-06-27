@@ -91,6 +91,7 @@ struct message_subscribe : public message_head {
     message_subscribe() {
         message_id = INNER_SERVER_SUBSCRIBE;
         length = sizeof(message_subscribe);
+        subscribe_id = 0;
     }
 };
 

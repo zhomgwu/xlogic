@@ -11,4 +11,8 @@
 #define XLOGIC_END }
 #endif 
 
+#ifndef USING_XLOGIC
+#define USING_XLOGIC using namespace xlogic;
+#endif
+
 #endif //__TYPE_DEF_H__
