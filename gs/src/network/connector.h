@@ -25,7 +25,7 @@ public:
 
 public:
 
-	virtual bool init(struct event_base * base, std::string host, uint32_t port, connector_handler * handler);
+	virtual bool init(struct event_base * base, std::string host, uint16_t port, connector_handler * handler);
 
 	virtual bool connect(uint32_t timeout = 0);
 
@@ -50,7 +50,7 @@ private:
 private:
 
 	char *                  				m_buffer_read;
-	uint32_t 								m_port;	
+	uint16_t 								m_port;	
 	bool 									m_is_connecting;
 	connector_handler * 					m_conn_handler;
 	struct event_base *						m_event_base;

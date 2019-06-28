@@ -13,7 +13,13 @@ SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}../../bin)
 # 生成库路径
 SET(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}../../lib)
 
+# 公共库
 ADD_SUBDIRECTORY(common)
 ADD_SUBDIRECTORY(network)
+
 # 服务器
-ADD_SUBDIRECTORY(service_conn)
+ADD_SUBDIRECTORY(server_conn)
+
+# 机器人
+ADD_SUBDIRECTORY(robot_client)
+

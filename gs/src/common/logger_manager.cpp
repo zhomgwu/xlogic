@@ -27,6 +27,7 @@ void logger_manager::init_log(std::string path) {
     m_fatal_logger = ILog4zManager::getRef().createLogger("fatal");
     m_warn_logger = ILog4zManager::getRef().createLogger("warn");
     if (!path.empty()) {
+        ILog4zManager::getRef().setLoggerPath(LOG4Z_MAIN_LOGGER_ID, path.c_str());
         ILog4zManager::getRef().setLoggerPath(m_info_logger, path.c_str());
         ILog4zManager::getRef().setLoggerPath(m_debug_logger, path.c_str());
         ILog4zManager::getRef().setLoggerPath(m_error_logger, path.c_str());

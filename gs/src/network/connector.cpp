@@ -30,14 +30,15 @@ connector::~connector() {
     }
 }
 
-bool connector::init(struct event_base * base, std::string host, uint32_t port, connector_handler * handler) {
+bool connector::init(struct event_base * base, std::string host, uint16_t port, connector_handler * handler) {
     if (!base) {
         return false;
     }
-    if (m_port <= 1024 || m_port >= 65535) {
+    if (port <= 1024 || port >= 65535) {
         return false;
     }
     m_host = host;
+    m_port = port;
     m_event_base = base;
     m_conn_handler = handler;
     return true;

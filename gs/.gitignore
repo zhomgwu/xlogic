@@ -1,9 +1,10 @@
 .vscode/
 build/
 third_party/*
-third_party/*.*
-bin/conn_srv
-bin/game_srv
-bin/db_srv
+bin/server_conn
+bin/server_game
+bin/server_db
+bin/robot_client
+
 *.log
 *.a

@@ -1,5 +1,5 @@
 # 服务器名
-SET(EXEC_NAME conn_srv)
+SET(EXEC_NAME server_conn)
 # 第三方路径
 SET(THIRDPARTY ../../third_party)
 # 头文件包含目录
@@ -20,5 +20,6 @@ ADD_EXECUTABLE(${EXEC_NAME} ${SRV_SRC})
 TARGET_LINK_LIBRARIES(${EXEC_NAME}
  libcommon.a
  libnetwork.a
+ event
  pthread
 )

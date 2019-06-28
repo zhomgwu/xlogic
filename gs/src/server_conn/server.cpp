@@ -9,7 +9,7 @@ server::~server() {
 
 }
 
-void server::server_init() {
+bool server::server_init(std::string conf_path) {
     // 读取服务器配置文件
 
     // 初始化网络模块
@@ -19,7 +19,7 @@ void server::server_init() {
     // 初始化游戏配置文件
 
     // 初始化游戏模块
-
+    return true;
 }
 
 void server::server_run() {

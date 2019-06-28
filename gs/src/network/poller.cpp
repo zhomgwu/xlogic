@@ -44,4 +44,12 @@ struct event_base *poller::get_event_base() {
     return m_evbase;
 }
 
+listener * poller::create_listener(uint16_t port, listener_handler *handler) {
+    return nullptr;
+}
+
+connector * poller::create_connector(std::string host, uint32_t port, connector_handler * handler) {
+    return nullptr;
+}
+
 XLOGIC_END

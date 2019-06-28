@@ -18,13 +18,11 @@ bool listener::init(struct event_base * base, uint16_t port, listener_handler *h
 	if (!base) {
 		return false;
 	}
-	if (m_port <= 1024 || m_port >= 65535) {
+	if (port <= 1024 || port >= 65535) {
 		return false;
 	}
-
 	m_event_base = base;
 	m_port = port;
-
 	if (handler) {
 		m_handler = handler;
 	}
@@ -49,6 +47,10 @@ bool listener::listen() {
 		return false;
 	}
 	return true;
+}
+
+listener_handler * listener::get_handler() {
+	return m_handler;
 }
 
 agent* listener::new_agent(struct bufferevent *bev) {
@@ -78,7 +80,6 @@ void listener::delete_agent(agent * ag) {
 
 void listener::listener_cb(struct evconnlistener *listener, evutil_socket_t fd, 
 		struct sockaddr *sa, int socklen, void *user_data) {
-
 	struct event_base *base = evconnlistener_get_base(listener);
 	xlogic::listener *my_listener = (xlogic::listener *)user_data;
 

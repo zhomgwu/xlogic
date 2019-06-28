@@ -31,15 +31,13 @@ private:
 };
 
 #if defined(DEBUG) || defined(Debug)
-#define LOGINFO(...)   LOGFMT_INFO(logger_manager::get_instance()->get_info_logger(), ##__VA_ARGS__)
 #define LOGDEBUG(...)  LOGFMT_DEBUG(logger_manager::get_instance()->get_debug_logger(), ##__VA_ARGS__)
 #else
-#define LOGINFO(...) 
 #define LOGDEBUG(...) 
 #endif
-
-#define LOGERROR(...)  LOGFMT_INFO(logger_manager::get_instance()->get_error_logger(), ##__VA_ARGS__)
-#define LOGFATAL(...)  LOGFMT_INFO(logger_manager::get_instance()->get_fatal_logger(), ##__VA_ARGS__)
-#define LOGWARN(...)   LOGFMT_INFO(logger_manager::get_instance()->get_warn_logger(), ##__VA_ARGS__)
+#define LOGINFO(...)   LOGFMT_INFO(logger_manager::get_instance()->get_info_logger(), ##__VA_ARGS__)
+#define LOGERROR(...)  LOGFMT_ERROR(logger_manager::get_instance()->get_error_logger(), ##__VA_ARGS__)
+#define LOGFATAL(...)  LOGFMT_FATAL(logger_manager::get_instance()->get_fatal_logger(), ##__VA_ARGS__)
+#define LOGWARN(...)   LOGFMT_WARN(logger_manager::get_instance()->get_warn_logger(), ##__VA_ARGS__)
 
 #endif //__LOGER_MANAGER_H__
