@@ -1,5 +1,7 @@
 #include "server.h"
+#include "poller.h"
 
+USING_XLOGIC
 
 server::server () {
 
@@ -34,3 +36,29 @@ void server::server_run() {
 void server::server_exit() {
 
 }
+
+bool server::init_log() {
+    return true;
+}
+
+bool server::init_network() {
+    return true;
+}
+
+bool server::init_configurate() {
+    return true;
+}
+
+bool server::init_db() {
+    return true;
+}
+
+bool server::init_game() {
+    return true;   
+}
+
+poller *server::get_poller() {
+    return m_poller;
+}
+
+

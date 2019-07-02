@@ -22,6 +22,7 @@ public:
 public:
     void set_peer_srv_type(uint32_t srv_type);
     void set_authorize_host(std::string host);
+    bool send(void *data, int len);
 
     virtual bool check_address(struct sockaddr *sa, int socklen);
     virtual void on_new_agent(agent* ag);

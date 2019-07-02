@@ -1,5 +1,7 @@
 #include "inner_listener.h"
 #include <netinet/in.h>
+#include "logger_manager.h"
+#include "agent.h"
 
 XLOGIC_BEGIN
 
@@ -21,9 +23,18 @@ void inner_listener::set_authorize_host(std::string host) {
     m_authorize_host = host;
 }
 
+bool inner_listener::send(void *data, int len) {
+    if (m_peer_srv_agent) {
+        return m_peer_srv_agent->send(data, len);
+    }
+    LOGERROR("Miss agent, server type: %d", m_peer_srv_type);
+    return false;
+}
+
 bool inner_listener::check_address(struct sockaddr *sa, int socklen) {
     if (m_peer_srv_agent) {
         // 已有连接不允许新的
+        LOGERROR("agent exist, server type: %d", m_peer_srv_type);
         return false;
     }
     if (m_authorize_host != "") {

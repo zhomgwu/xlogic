@@ -1,0 +1,63 @@
+
+syntax = "proto3";
+
+package Stardom;
+
+import "common_types.proto";
+import "common_enum.proto";
+
+// CMD_CS_LOGIN
+message CS_LOGIN {
+    uint32 platformid = 1;                      // 自定义id，用来标识哪个平台
+    string openid = 1;                          // openid，平台唯一id
+    string token = 2;                           // 新token，用来平台验证
+    string last_succ_token = 3;                 // 上一次的登录token，服务器会存储最近一次成功token，只要服务器不重启，该token一直有效
+    string app_version = 4;                     // 客户端的版本，版本验证使用
+};
+
+// CMD_SC_LOGIN
+message SC_LOGIN {
+    ErrorCode result = 1;                       // 错误码
+    string detail = 2;                          // 错误信息
+    string succ_token = 3;                      // 登录成功的token
+};
+
+// CMD_SC_ACTOR_LIST
+message SC_ACTORLIST {
+    message ActorChooseInfo {
+        uint64 player_id = 0;                   // 角色id
+        string name = 1;                        // 角色名字
+        uint32 prof = 2;                        // 职业
+        uint32 skin = 3;                        // 皮肤
+        uint32 level = 4;                       // 等级
+    };
+
+    repeated ActorChooseInfo actors = 1;              // 角色列表
+};
+
+// CMD_CS_CREATE_ACTOR
+message CS_CREATEACTOR {
+    uint32 prof = 1;                            // 职业
+    string name = 2;                            // 名字
+};
+
+// CMD_SC_CREATE_ACTOR
+message SC_CREATEACTOR {
+    PlayerInfo player_info = 1;                 // 个人信息
+};
+
+// CMD_SC_PLAYER_INFO
+message SC_PLAYER_INFO {
+    PlayerInfo player_info = 1;                 // 个人信息  
+};
+
+// CMD_CS_ACTOR_INFO
+message CS_ACTOR_INFO {
+    uint64 player_id = 1;                       // 角色id
+};
+
+// CMD_SC_ACTOR_INFO
+message SC_ACTOR_INFO {
+    ActorInfo actor_info = 1;                   // 角色信息
+};
+

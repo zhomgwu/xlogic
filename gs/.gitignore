@@ -1,5 +1,6 @@
 .vscode/
 build/
+src/build/
 third_party/*
 bin/server_conn
 bin/server_game

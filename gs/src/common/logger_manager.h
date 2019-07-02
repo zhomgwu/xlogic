@@ -30,6 +30,10 @@ private:
     std::string m_log_path;
 };
 
+#define INIT_LOG(path) logger_manager::get_instance()->get_debug_logger(path)
+#define START_LOG() logger_manager::get_instance()->start_log()
+#define STOP_LOG() logger_manager::get_instance()->stop_log()
+
 #if defined(DEBUG) || defined(Debug)
 #define LOGDEBUG(...)  LOGFMT_DEBUG(logger_manager::get_instance()->get_debug_logger(), ##__VA_ARGS__)
 #else

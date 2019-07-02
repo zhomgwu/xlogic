@@ -1,0 +1,84 @@
+
+syntax = "proto3";
+
+package Stardom;
+
+// 个人信息
+mesasge PlayerInfo {
+    uint64 player_id = 1;                       // 玩家id
+    string name = 2;                            // 名称
+    string picture = 3;                         // 头像 base64值
+    uint32 faction = 4;                         // 势力
+    uint32 sex = 5;                             // 性别
+    uint32 prof = 6;                            // 职业
+    uint32 level = 7;                           // 等级
+    uint32 exp = 8;                             // 经验
+    uint32 vip_level = 9;                       // vip
+    uint32 offical_pos = 10;                    // 官阶
+    uint32 power = 11;                          // 战力
+    uint32 cash = 12;                           // 现金
+    uint32 gold = 13;                           // 元宝
+    uint32 copper = 14;                         // 铜钱
+    uint32 cp_zone_id = 15;                     // 亲密空间
+
+    uint32 online_time = 80;                    // 累计在线
+    uint32 login_ts = 81;                       // 登入时间
+    uint32 logout_ts = 82;                      // 登出时间
+};
+
+// 玩家信息
+message ActorInfo {
+    
+    
+};
+
+// 性格
+message CharacterInfo {
+    uint32 clever = 1;                          // 乖巧
+    uint32 rebellious = 2;                      // 叛逆
+    uint32 pure = 3;                            // 单纯
+    uint32 scheming = 4;                        // 腹黑
+    uint32 warmth = 5;                          // 热情
+    uint32 indifference = 6;                    // 冷漠
+};
+
+// 社交
+message SocialInfo {
+    uint32 age = 1;                             // 年龄
+    uint32 sex = 2;                             // 性别
+    uint32 province = 3;                        // 省份
+    uint32 constellation = 4;                   // 星座
+    uint32 birthday = 5;                        // 生日
+    uint32 popularity = 6;                      // 人气
+    uint32 prestige = 7;                        // 声望
+    uint32 charm = 8;                           // 魅力
+    string signature = 9;                       // 签名
+    repeated uint32 flags = 10;                 // 标签
+    repeated CharacterInfo char_info = 11;      // 性格
+};
+
+// 图片信息
+message PictureInfo {
+    
+
+    
+};
+
+// 公会成员
+message GuildPlayerInfo {
+    uint64 player_id = 1;
+    uint32 guild_pos = 2;
+    uint32 level = 3;
+    uint32 week_contribution = 4;
+    uint32 total_contribution = 5;
+    uint64 logout_ts = 6;
+};
+
+// 公会信息
+message GuildInfo {
+    uint64 guild_id = 1;
+    uint32 guile_level = 2;
+    repeated GuildPlayerInfo members = 2;
+};
+
+

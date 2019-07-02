@@ -3,6 +3,11 @@
 
 #include <string>
 #include "type_def.h"
+#include "poller.h"
+#include "inner_listener.h"
+#include "listener.h"
+
+USING_XLOGIC
 
 struct server_config {
 	uint16_t port;
@@ -29,8 +34,14 @@ private:
 	bool init_db();
 	bool init_game();
 
+	poller *get_poller();
+	inner_listener *get_server_listener();
+
 private:
 
+	std::map<int, inner_listener*> m_inner_listeners;		// 服务器连接
+	poller * m_poller;										// 轮询器
+	listener * m_client_listener;							// 客户端连接
 };
 
 #endif // __SERVER_H__

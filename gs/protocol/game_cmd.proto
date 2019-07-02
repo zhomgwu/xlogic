@@ -1,0 +1,29 @@
+
+syntax = "proto3";
+
+package Stardom;
+
+enum GAME_CMD {  
+    CMD_BEGIN                           = 0;
+
+    CMD_CS_LOGIN                        = 101;      // 登录请求
+    CMD_SC_LOGIN                        = 102;      // 登录回应
+    CMD_SC_ACTOR_LIST                   = 103;      // 角色列表
+
+    CMD_CS_CREATE_ACTOR                 = 104;      // 创建角色
+    CMD_SC_CREATE_ACTOR                 = 105;      // 角色回应
+
+    CMD_SC_PLAYER_INFO                  = 106;      // 自己信息
+    CMD_SC_EQUIP_INFO                   = 108;
+    CMD_SC_ITEM_INFO                    = 109;
+    CMD_SC_STONE_INFO                   = 110;
+    CMD_SC_CHIP_INFO                    = 111;
+    CMD_SC_GUILD_INFO                   = 112;
+
+    CMD_CS_ACTOR_INFO                   = 120;      // 玩家信息
+    CMD_SC_ACTOR_INFO                   = 121;      // 玩家信息
+
+
+
+    CMD_END                             = 9999;
+};
