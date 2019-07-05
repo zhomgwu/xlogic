@@ -30,7 +30,7 @@ private:
     std::string m_log_path;
 };
 
-#define INIT_LOG(path) logger_manager::get_instance()->get_debug_logger(path)
+#define INIT_LOG(path) logger_manager::get_instance()->init_log(path)
 #define START_LOG() logger_manager::get_instance()->start_log()
 #define STOP_LOG() logger_manager::get_instance()->stop_log()
 

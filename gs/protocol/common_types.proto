@@ -26,9 +26,15 @@ mesasge PlayerInfo {
     uint32 logout_ts = 82;                      // 登出时间
 };
 
-// 玩家信息
+// 玩家信息，只包括部分显示信息
 message ActorInfo {
-    
+    uint64 player_id = 1;                       // 玩家id
+    string name = 2;                            // 名称
+    string picture = 3;                         // 头像 base64值
+    uint32 faction = 4;                         // 势力
+    uint32 sex = 5;                             // 性别
+    uint32 prof = 6;                            // 职业
+    uint32 level = 7;                           // 等级
     
 };
 

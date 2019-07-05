@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package Stardom;
+
+import "common_types.proto";
+import "common_enum.proto";
+
+enum SERVER_CMD {
+    CMD_BEGIN                           = 10000;
+    CMD_GW_WAR_RESULT                   = 10001;
+    CMD_WG_WAR_RESULT                   = 10002;
+    CMD_END                             = 99999;
+};
+
+// CMD_GW_WAR_RESULT
+message GW_WAR_RESULT {
+    uint64 war_id = 1;
+    WarInfo war_info = 2;
+};
+
+// CMD_WG_WAR_RESULT
+message WG_WAR_RESULT {
+    uint32 result = 1;
+    WarInfo war_info = 2;
+};
+

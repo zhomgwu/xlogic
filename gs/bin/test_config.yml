@@ -1,7 +1,7 @@
 # This is used for configurate server parameters
-conn_server :
+server_conn :
   port : [10000, 10001]
   max_client : 10
 
-game_server :
+server_game :
   port : 10002

@@ -19,7 +19,8 @@ ADD_SUBDIRECTORY(network)
 
 # 服务器
 ADD_SUBDIRECTORY(server_conn)
-
 # 机器人
 ADD_SUBDIRECTORY(robot_client)
+# 测试例子
+ADD_SUBDIRECTORY(test)
 

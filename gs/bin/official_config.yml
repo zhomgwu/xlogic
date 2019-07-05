@@ -1,0 +1,28 @@
+# This is used for configurate server parameters
+
+# 服务器信息配置
+server_info :
+  platform_id : 0
+  server_id : 1
+
+# 连接服务器配置
+server_conn :
+  client_listener : 6001
+  _game_listener : 6002
+  _login_listener : 6003
+  _chat_listener : 6004
+  max_client : 2000
+  
+# 游戏服务器配置
+server_game :
+  is_gm_enable : false
+
+# 数据库配置
+server_db :
+  listener : 7005
+  mysql_addr : "127.0.0.1"
+  mysql_port : 3306
+  mysql_user : "root"
+  mysql_passwd : "123456"
+
+ 

@@ -15,4 +15,8 @@
 #define USING_XLOGIC using namespace xlogic;
 #endif
 
+#ifndef SAFE_DELETE
+#define SAFE_DELETE(ptr) {if (ptr) { delete ptr; ptr = nullptr; } }
+#endif
+
 #endif //__TYPE_DEF_H__

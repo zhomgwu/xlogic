@@ -20,10 +20,11 @@ enum GAME_CMD {
     CMD_SC_CHIP_INFO                    = 111;
     CMD_SC_GUILD_INFO                   = 112;
 
-    CMD_CS_ACTOR_INFO                   = 120;      // 玩家信息
+    CMD_CS_ACTOR_INFO                   = 120;      // 查看玩家信息
     CMD_SC_ACTOR_INFO                   = 121;      // 玩家信息
 
-
+    CMD_CS_CHALLENGE_STAGE              = 200;      // 挑战关卡
+    CMD_SC_CHALLENGE_STAGE              = 201;      // 关卡结果
 
     CMD_END                             = 9999;
 };

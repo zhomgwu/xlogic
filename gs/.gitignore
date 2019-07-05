@@ -6,6 +6,8 @@ bin/server_conn
 bin/server_game
 bin/server_db
 bin/robot_client
+bin/my_test
+bin/dev_config.yml
 
 *.log
 *.a
