@@ -5,6 +5,12 @@ server_info :
   platform_id : 0
   server_id : 1
 
+# 全局服务器信息
+server_global:
+  global_addr : "192.168.12.91"
+  global_port : "8989"
+  global_key : "wearechampion"
+
 # 连接服务器配置
 server_conn :
   client_listener : 6001

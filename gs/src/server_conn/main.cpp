@@ -4,12 +4,19 @@
 #include "logger_manager.h"
 #include "server.h"
 #include "get_opt.h"
+#include "app_utility.h"
 
 int main(int argc, char *argv[]) {
     get_opt opt(argc, (const char**)argv);
     // 后台启动
     if (opt.has("-d")) {
         daemon(1, 1);
+    }
+    // 记录pid
+    std::string pid_name = argv[0];
+    pid_name+= ".pid";
+    if (!util::lock_and_record_pid(pid_name)) {
+        return false;
     }
     // 先初始化日志
     if (!opt.has("-logpath")) {

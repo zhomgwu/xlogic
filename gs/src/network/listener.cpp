@@ -129,7 +129,7 @@ void listener::conn_eventcb(struct bufferevent *bev, short events, void *user_da
 		if (handler) {
 			handler->on_disconnect(ag);
 		}
-		delete_agent(bev);
+		my_listener->delete_agent(ag);
 		bufferevent_free(bev);
 	}
 }

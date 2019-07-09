@@ -17,7 +17,7 @@ message CS_LOGIN {
 
 // CMD_SC_LOGIN
 message SC_LOGIN {
-    ErrorCode result = 1;                       // 错误码
+    uint32 result = 1;                          // 错误码
     string detail = 2;                          // 错误信息
     string succ_token = 3;                      // 登录成功的token
 };

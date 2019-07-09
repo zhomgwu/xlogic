@@ -5,6 +5,7 @@
 #include "type_def.h"
 #include "network.h"
 #include "signal_handler.h"
+#include "game_looper.h"
 
 USING_XLOGIC
 
@@ -26,7 +27,7 @@ struct server_config {
 class server : public signal_handler {
 public:
 	server();
-	~server();
+	virtual ~server();
 
 public:
 
@@ -44,14 +45,16 @@ private:
 	bool init_configurate();
 	bool init_game();
 
+	server_config *get_server_config();
 	poller *get_poller();
 	inner_listener *get_server_listener();
 
 private:
-	int m_status;
-	poller * m_poller;										// 轮询器
+	server_config m_config;									// 服务器配置
+	int m_status;											// 服务器状态
+	game_looper * m_app_looper;								// 游戏固定回调
+	poller * m_poller;										// 网络轮询器
 	listener * m_client_listener;							// 客户端连接
-	server_config m_config;
 	std::map<int, inner_listener*> m_inner_listeners;		// 服务器连接
 };
 

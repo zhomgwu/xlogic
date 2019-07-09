@@ -2,6 +2,7 @@
 #define _SIGNAL_HANDLER_H__
 
 #include <set>
+#include <signal.h>
 
 class signal_handler {
 public:

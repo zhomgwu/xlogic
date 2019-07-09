@@ -10,4 +10,5 @@ bin/my_test
 bin/dev_config.yml
 
 *.log
+*.pid
 *.a
