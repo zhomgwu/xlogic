@@ -1,5 +1,5 @@
 # 服务器名
-SET(EXEC_NAME my_test)
+SET(EXEC_NAME mytest)
 # 第三方路径
 SET(THIRDPARTY ../../third_party)
 # 头文件包含目录

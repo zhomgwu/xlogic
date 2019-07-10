@@ -55,6 +55,9 @@ struct message_sock_auth : public message_head {
     message_sock_auth() {
         message_id = INNER_SOCK_AUTH;
         length = sizeof(message_sock_auth);
+        usr_info.user_id = 0;
+        usr_info.player_id = 0;
+        usr_info.session_id = 0;
     }
 
     void set_user_info(uint64_t user_id, uint64_t player_id, uint32_t session_id) {

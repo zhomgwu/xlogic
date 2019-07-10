@@ -6,6 +6,7 @@
 
 XLOGIC_BEGIN
 
+
 agent::agent(struct bufferevent *bev)
 : m_buffer_read(nullptr)
 , m_msg_proc(nullptr)

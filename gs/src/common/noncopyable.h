@@ -2,7 +2,7 @@
 #define __NONCOPYABLE_H__
 
 class noncopyable {
-protected :
+protected:
 	noncopyable() {}
 	~noncopyable() {}
 

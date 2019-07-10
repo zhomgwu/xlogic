@@ -3,6 +3,8 @@
 
 #include "app_looper.h"
 
+USING_XLOGIC
+
 class game_looper : public app_looper {
 public:
     virtual ~game_looper();

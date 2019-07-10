@@ -3,9 +3,6 @@
 #include <thread>
 #include "yaml-cpp/yaml.h"
 #include "logger_manager.h"
-#include "client_handler.h"
-#include "login_handler.h"
-#include "game_handler.h"
 
 USING_XLOGIC
 
@@ -130,25 +127,11 @@ bool server::init_network() {
         return false;
     }
 
-    // 客户端监听
     m_client_listener = new listener();
-    if (!m_client_listener->init(m_poller->get_event_base(), m_config.client_listener_port, new client_handler())
-        || !m_client_listener->listen()) {
+    if (!m_client_listener->init(m_poller->get_event_base(), m_config.client_listener_port, m_app_looper)) {
         return false;
     }
-    // game服务器监听
-    m_game_listener = new listener();
-    if (!m_game_listener->init(m_poller->get_event_base(), m_config.game_listener_port, new game_handler())
-        || !m_game_listener->listen()) {
-        return false;
-    }
-    // login服务器监听
-    m_login_listener = new listener();
-    if (!m_login_listener->init(m_poller->get_event_base(), m_config.login_listener_port, new login_handler())
-        || !m_login_listener->listen()) {
-        return false;
-    }
-    
+
     return true;
 }
 

@@ -47,20 +47,13 @@ private:
 
 	server_config *get_server_config();
 	poller *get_poller();
-	listener *get_server_listener();
-
+	
 private:
 	server_config m_config;									// 服务器配置
 	int m_status;											// 服务器状态
 	game_looper * m_app_looper;								// 游戏固定回调
 	poller * m_poller;										// 网络轮询器
-
-	listener * m_client_listener;							// 客户端监听器
-	listener * m_game_listener;								// 游戏服监听
-	listener * m_login_listener;							// 登录服监听
-	
-	// connector* m_social_connector;							// 连接社交服
-	// std::map<int, listener*> m_inner_listeners;				// 服务器连接
+	listener * m_client_listener;							// 客户端连接
 };
 
 #endif // __SERVER_H__

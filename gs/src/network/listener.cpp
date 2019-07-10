@@ -6,7 +6,8 @@ XLOGIC_BEGIN
 
 listener::listener() 
 : m_port(0)
-, m_handler(nullptr) {
+, m_handler(nullptr)
+, m_agent_maker(nullptr) {
 
 }
 
@@ -49,17 +50,21 @@ bool listener::listen() {
 	return true;
 }
 
+void listener::set_agent_maker(agent_maker * maker) {
+	m_agent_maker = maker;
+}
+
 listener_handler * listener::get_handler() {
 	return m_handler;
 }
 
 agent* listener::new_agent(struct bufferevent *bev) {
-	agent * ag = new agent(bev);
-	if (ag) {
+	agent * ag = nullptr;
+	if (m_agent_maker) {
+		ag = m_agent_maker->new_agent(bev);
 		m_agents.insert(std::make_pair(bev, ag));
-		return ag;
-	}
-	return nullptr;
+	}	
+	return ag;
 }
 
 agent *listener::find_agent(struct bufferevent *bev) {
@@ -70,11 +75,13 @@ agent *listener::find_agent(struct bufferevent *bev) {
 }
 
 void listener::delete_agent(agent * ag) {
-	if (ag) {
-		struct bufferevent * bev;
-		bev = ag->get_bufferevent();
+	if (ag != nullptr) {
+		struct bufferevent * bev = ag->get_bufferevent();
 		m_agents.erase(bev);
-		delete ag;
+
+		if (m_agent_maker) {
+			m_agent_maker->delete_agent(ag);
+		}
 	}
 }
 
@@ -95,9 +102,8 @@ void listener::listener_cb(struct evconnlistener *listener, evutil_socket_t fd,
 	bufferevent_setcb(bev, listener::conn_readcb, listener::conn_writecb, listener::conn_eventcb, (void*)my_listener);
 	bufferevent_enable(bev, EV_READ | EV_WRITE);
 
-	agent *ag;
-	ag = my_listener->new_agent(bev);
-	if (handler) {
+	agent *ag = my_listener->new_agent(bev);
+	if (handler && ag) {
 		handler->on_new_agent(ag);
 	}
 }

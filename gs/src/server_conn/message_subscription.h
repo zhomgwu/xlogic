@@ -28,7 +28,7 @@ public:
 
 private:
     static message_subscription *       m_instance;
-    std::multimap<uint32_t, agent *>   m_subscription;
+    std::multimap<uint32_t, agent *>    m_subscription;
 };
 
 #endif // __MESSAGE_REGISTER_H__
