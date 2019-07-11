@@ -19,6 +19,7 @@ ADD_SUBDIRECTORY(network)
 
 # 服务器
 ADD_SUBDIRECTORY(server_conn)
+ADD_SUBDIRECTORY(server_game)
 # 机器人
 ADD_SUBDIRECTORY(robot_client)
 # 测试例子

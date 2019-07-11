@@ -65,13 +65,9 @@ void server::server_run() {
     m_app_looper->on_end();
 }
 
-void server::server_exit() {
-    if (m_poller) {
-        SAFE_DELETE(m_poller);
-    }
-    if (m_app_looper) {
-        SAFE_DELETE(m_app_looper);
-    }
+void server::server_exit() {    
+    SAFE_DELETE(m_poller);
+    SAFE_DELETE(m_app_looper);
 }
 
 void server::on_signal(int signo) {
@@ -127,10 +123,8 @@ bool server::init_network() {
         return false;
     }
 
-    m_client_listener = new listener();
-    if (!m_client_listener->init(m_poller->get_event_base(), m_config.client_listener_port, m_app_looper)) {
-        return false;
-    }
+    
+    
 
     return true;
 }

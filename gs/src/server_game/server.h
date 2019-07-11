@@ -53,7 +53,9 @@ private:
 	int m_status;											// 服务器状态
 	game_looper * m_app_looper;								// 游戏固定回调
 	poller * m_poller;										// 网络轮询器
-	listener * m_client_listener;							// 客户端连接
+	
+	//listener * m_client_listener;							// 客户端连接
+	connector * m_conn_connector;							// 网关服代理
 };
 
 #endif // __SERVER_H__

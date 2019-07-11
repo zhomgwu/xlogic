@@ -1,4 +1,5 @@
 #include "agent_manager.h"
+#include "client_agent.h"
 
 agent_manager::agent_manager() {
 
@@ -23,8 +24,9 @@ void agent_manager::destroy() {
 }
 
 agent *agent_manager::new_agent(struct bufferevent *bev) {
-    agent * ag = new agent(bev);
     uint32_t session_id = ++m_session_generator;
+    client_agent * ag = new client_agent(bev);
+    ag->set_session_id(session_id);
     m_agents.insert(std::make_pair(session_id, ag));
     return ag;
 }
@@ -45,4 +47,20 @@ agent *agent_manager::get_agent_by_session_id(uint32_t session_id) {
         return it->second;
     }
     return nullptr;
+}
+
+void agent_manager::auth_agent_by_session_id(uint32_t session_id, uint64_t user_id, uint64_t player_id) {
+    agent * ag = get_agent_by_session_id(session_id);
+    if (ag == nullptr) {
+        return;
+    }
+    // 只存client_agent对象，所以强传没问题，就为了提供一点点效率，为了安全可以使用dynamic_cast
+    client_agent *cli_ag = (client_agent*)ag;
+    if (user_id != 0) {
+        cli_ag->set_user_id(user_id);
+    }
+    if (player_id != 0) {
+        cli_ag->set_player_id(player_id);
+    }
+    cli_ag->auth(true);
 }

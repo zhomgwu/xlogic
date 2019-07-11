@@ -15,14 +15,15 @@ public:
 public:
 
     void *raw_data();
-
     uint32_t size();
-
     uint32_t length();
 
     void append(void *data, uint32_t len);
 
-    bool get_data(void *dst, uint32_t len);
+    bool get_entire_data(void **dst, int &len);
+    void drop_data(int len);
+
+    bool copy_data(void *dst, uint32_t len);
     // 该方法用于解析POD数据类型，非POD不允许使用
     template<typename T>
     T * try_parse() {

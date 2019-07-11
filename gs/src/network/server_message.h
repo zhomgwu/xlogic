@@ -11,8 +11,7 @@ enum INNER_MESSAGE {
     
     INNER_MSG_FORWARD           = 4,        // 转发
     INNER_MSG_BROADCAST         = 5,        // 广播
-
-    INNER_SERVER_SUBSCRIBE      = 6,        // 订阅
+    INNER_MSG_SUBSCRIBE         = 6,        // 订阅
 
     INNER_SERVER_CLOSE          = 100,      // 服务器关闭
     INNER_MAX                   = 1000      // 内部最大消息id
@@ -27,12 +26,23 @@ struct user_info {
     uint32_t session_id;        // 会话id
 };
 
+// 客户端与服务器的包头
 struct message_head {
     uint16_t length;            // 消息长度，包括头部
     uint16_t message_id;        // 消息id
 };
 
-struct message_sock_new : public message_head {
+// 特殊包头例子，继承于message_head
+struct special_message_head : public message_head {
+    uint32_t encrypt_key;
+};
+
+// 服务器与服务器的包头
+struct inner_message_head : public message_head {
+
+};
+
+struct message_sock_new : public inner_message_head {
     uint32_t session_id;
     message_sock_new() {
         message_id = INNER_SOCK_NEW;
@@ -41,7 +51,7 @@ struct message_sock_new : public message_head {
     }
 };
 
-struct message_sock_close : public message_head {
+struct message_sock_close : public inner_message_head {
     uint32_t session_id;
     message_sock_close() {
         message_id = INNER_SOCK_CLOSE;
@@ -50,7 +60,7 @@ struct message_sock_close : public message_head {
     }
 };
 
-struct message_sock_auth : public message_head {
+struct message_sock_auth : public inner_message_head {
     user_info usr_info;
     message_sock_auth() {
         message_id = INNER_SOCK_AUTH;
@@ -67,7 +77,7 @@ struct message_sock_auth : public message_head {
     }
 };
 
-struct message_forward : public message_head {
+struct message_forward : public inner_message_head {
     uint32_t session_id;
     message_forward() {
         message_id = INNER_MSG_FORWARD;
@@ -76,7 +86,7 @@ struct message_forward : public message_head {
     }
 };
 
-struct message_broadcast : public message_head {
+struct message_broadcast : public inner_message_head {
     uint32_t broadcast_count;
     message_broadcast() {
         message_id = INNER_MSG_BROADCAST;
@@ -89,16 +99,16 @@ struct message_broadcast : public message_head {
     }
 };
 
-struct message_subscribe : public message_head {
+struct message_subscribe : public inner_message_head {
     uint32_t subscribe_id;  //订阅id
     message_subscribe() {
-        message_id = INNER_SERVER_SUBSCRIBE;
+        message_id = INNER_MSG_SUBSCRIBE;
         length = sizeof(message_subscribe);
         subscribe_id = 0;
     }
 };
 
-struct message_server_close : public message_head {
+struct message_server_close : public inner_message_head {
     message_server_close() {
         message_id = INNER_SERVER_CLOSE;
         length = sizeof(message_server_close);
@@ -114,6 +124,6 @@ static message_sock_auth * make_message_sock_auth(uint64_t user_id, uint64_t pla
 static message_forward * make_message_forward(uint32_t session_id, void *data, uint32_t len);
 static message_broadcast * make_message_broadcast(uint64_t *session_array, uint32_t count, void *data, uint32_t len);
 static message_server_close * make_message_server_close();
-static void destroy_message(message_head *msg);
+static void destroy_message(inner_message_head *msg);
 
 #endif // __SERVER_MESSAGE_H__

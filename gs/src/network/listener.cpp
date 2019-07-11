@@ -1,6 +1,7 @@
 #include "listener.h"
 #include <string.h>
 #include "agent.h"
+#include "message_processor.h"
 
 XLOGIC_BEGIN
 
@@ -62,8 +63,10 @@ agent* listener::new_agent(struct bufferevent *bev) {
 	agent * ag = nullptr;
 	if (m_agent_maker) {
 		ag = m_agent_maker->new_agent(bev);
-		m_agents.insert(std::make_pair(bev, ag));
-	}	
+	} else {
+		ag = new agent(bev);
+	}
+	m_agents.insert(std::make_pair(bev, ag));
 	return ag;
 }
 
@@ -78,9 +81,11 @@ void listener::delete_agent(agent * ag) {
 	if (ag != nullptr) {
 		struct bufferevent * bev = ag->get_bufferevent();
 		m_agents.erase(bev);
-
+		
 		if (m_agent_maker) {
 			m_agent_maker->delete_agent(ag);
+		} else {
+			delete ag;
 		}
 	}
 }
@@ -112,10 +117,24 @@ void listener::conn_readcb(struct bufferevent *bev, void *user_data) {
 	/* The read callback is triggered when new data arrives in the input
      buffer and the amount of readable data exceed the low watermark
      which is 0 by default.*/
+	USING_XLOGIC
+
 	xlogic::listener *my_listener = (xlogic::listener *)user_data;
 	agent *ag = my_listener->find_agent(bev);
-	if (ag) {
+	if (ag != nullptr) {
 		ag->do_recv();
+		// 尝试获得整包，获得整包后就处理
+		void *entire_data = nullptr;
+		int data_len = 0;
+		message_processor *ag_proc = ag->get_socket_message_processor();
+		if (ag_proc->get_entire_data(&entire_data, data_len)) {
+			xlogic::listener_handler * handler = my_listener->get_handler();
+			if (handler != nullptr) {
+				handler->on_message(ag, entire_data, data_len);
+			}
+			// 数据用完丢弃
+			ag_proc->drop_data(data_len);
+		}
 	}
 }
 

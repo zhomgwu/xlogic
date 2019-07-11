@@ -89,7 +89,16 @@ void connector::do_recv() {
         size_t recv_length = 0;
         recv_length = bufferevent_read(m_bufferevent, m_buffer_read, RECV_BUFFER_SIZE);
         if (recv_length > 0) {
-            m_msg_proc->append(m_buffer_read, recv_length);   
+            m_msg_proc->append(m_buffer_read, recv_length); 
+
+            void *entire_data = nullptr;
+            int data_len = 0;
+            if (m_msg_proc->get_entire_data(&entire_data, data_len)) {
+                if (m_conn_handler) {
+                    m_conn_handler->on_message(this, entire_data, data_len);
+                }
+                m_msg_proc->drop_data(data_len);
+            }
         }
     }
 }
@@ -116,22 +125,22 @@ void connector::conn_eventcb(struct bufferevent *bev, short events, void *user_d
     connector_handler * handler = conn->get_handler();
     if (events & BEV_EVENT_CONNECTED) {
         if (handler) {
-            handler->on_connect_success();
+            handler->on_connect_success(conn);
         }
     }
     else if (events & BEV_EVENT_ERROR) {
         if (handler) {
             if (conn->is_connecting()) {
-                handler->on_connect_fail();
+                handler->on_connect_fail(conn);
             }
             else {
-                handler->on_disconnect();
+                handler->on_disconnect(conn);
             }
         }
     }
     else if ( events & BEV_EVENT_EOF) {
         if (handler) {
-            handler->on_disconnect();
+            handler->on_disconnect(conn);
         }
     }
 }

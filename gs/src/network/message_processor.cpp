@@ -3,8 +3,11 @@
 #include <stdlib.h>
 #include "socket_message_queue.h"
 #include "server_message.h"
+#include "logger_manager.h"
 
+// 最小缓存区
 #define MIN_BUFFER_SIZE         64
+// 收缩长度，缓存区大于32k时，尽量缩小，缩成当前数据的2倍大
 #define SHRINK_BUFFER_SIZE      32768
 
 XLOGIC_BEGIN
@@ -39,42 +42,67 @@ void message_processor::append(void *data, uint32_t len) {
     uint32_t need_size = m_length + len;
     if (!check_size(need_size)) {
         // log size not enough here
+        LOGERROR("agent buffer is full!");
         return;
     }
 
     memcpy(m_data+m_length, data, len);
     m_length += len;
 
-    socket_message_queue *queue = socket_message_queue::get_instance();
-    uint32_t offset = 0;
+    // socket_message_queue *queue = socket_message_queue::get_instance();
+    // uint32_t offset = 0;
 
-    do {
-        if (m_length < sizeof(message_head)) {
-            // head incomplete
-            break;
-        }
+    // do {
+    //     if (m_length < sizeof(message_head)) {
+    //         // head incomplete
+    //         break;
+    //     }
         
-        uint32_t msg_len = 0;
-        message_head *msg_head = (message_head*)m_data;
-        msg_len = msg_head->length;
-        if (m_length < msg_len) {
-            // package incomplete
-            break;
-        }
-        // 分离单个消息
-        socket_message * msg = socket_message_queue::new_socket_message(m_data+offset, msg_len);
-        queue->push(msg);
+    //     uint32_t msg_len = 0;
+    //     message_head *msg_head = (message_head*)m_data;
+    //     msg_len = msg_head->length;
+    //     if (m_length < msg_len) {
+    //         // package incomplete
+    //         break;
+    //     }
+    //     // 分离单个消息
+    //     socket_message * msg = socket_message_queue::new_socket_message(m_data+offset, msg_len);
+    //     queue->push(msg);
         
-        m_length -= msg_len;
-        offset += msg_len;
-    }while(false);
-    // 将数据全部移到头部
-    if (offset > 0) {
-        memmove(m_data, m_data+offset, m_length);    
+    //     m_length -= msg_len;
+    //     offset += msg_len;
+    // }while(false);
+    // // 将数据全部移到头部
+    // if (offset > 0) {
+    //     memmove(m_data, m_data+offset, m_length);    
+    // }
+}
+
+bool message_processor::get_entire_data(void **dst, int &len) {
+    if (m_length < sizeof(message_head)) {
+        // head incomplete
+        return false;
+    }
+    
+    message_head *msg_head = (message_head*)m_data;
+    if (m_length < msg_head->length) {
+        // package incomplete
+        return false;
+    }
+    
+    *dst = m_data;
+    len = msg_head->length;
+    return true;
+}
+
+void message_processor::drop_data(int len) {
+    if (len > 0) {
+        m_length -= len;
+        memmove(m_data, m_data+len, m_length);
     }
 }
 
-bool message_processor::get_data(void *dst, uint32_t len) {
+bool message_processor::copy_data(void *dst, uint32_t len) {
     if (m_length < len) {
         return false;
     }

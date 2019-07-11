@@ -6,8 +6,13 @@
 #include "client_handler.h"
 #include "login_handler.h"
 #include "game_handler.h"
+#include "agent_manager.h"
 
 USING_XLOGIC
+
+
+agent * g_game_agent = nullptr;
+agent * g_login_agent = nullptr;
 
 server::server ()
 : m_poller(nullptr) {
@@ -69,12 +74,8 @@ void server::server_run() {
 }
 
 void server::server_exit() {
-    if (m_poller) {
-        SAFE_DELETE(m_poller);
-    }
-    if (m_app_looper) {
-        SAFE_DELETE(m_app_looper);
-    }
+    SAFE_DELETE(m_poller);
+    SAFE_DELETE(m_app_looper);
 }
 
 void server::on_signal(int signo) {
@@ -132,6 +133,7 @@ bool server::init_network() {
 
     // 客户端监听
     m_client_listener = new listener();
+    m_client_listener->set_agent_maker(agent_manager::get_instance());
     if (!m_client_listener->init(m_poller->get_event_base(), m_config.client_listener_port, new client_handler())
         || !m_client_listener->listen()) {
         return false;

@@ -16,18 +16,11 @@ public:
 public:
 
 	virtual void do_recv();
-
 	virtual bool send(void * data, uint32_t len);
-
 	struct bufferevent * get_bufferevent();
-
     message_processor * get_socket_message_processor();
 
 private:
-    uint64_t                m_user_id;
-    uint64_t                m_player_id;
-    uint32_t                m_session_id;
-
     char *                  m_buffer_read;
     message_processor *     m_msg_proc;
     struct bufferevent *    m_bufferevent;
