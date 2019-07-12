@@ -8,24 +8,32 @@ server_info :
 # 全局服务器信息
 server_global:
   global_addr : "192.168.12.91"
-  global_port : "8989"
+  global_port : 8989
   global_key : "wearechampion"
 
 # 连接服务器配置
 server_conn :
-  client_listener : 6001
-  _game_listener : 6002
-  _login_listener : 6003
-  _chat_listener : 6004
+  client_listener : 6101
+  _game_listener : 6102
+  _login_listener : 6103
+  _chat_listener : 6104
   max_client : 2000
   
 # 游戏服务器配置
 server_game :
   is_gm_enable : false
 
+# 登录服务器配置
+server_login :
+  listener : 6201
+
+# 战斗服务器配置
+server_war :
+  listener : 6301
+
 # 数据库配置
 server_db :
-  listener : 7005
+  listener : 6401
   mysql_addr : "127.0.0.1"
   mysql_port : 3306
   mysql_user : "root"

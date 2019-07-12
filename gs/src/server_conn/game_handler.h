@@ -5,7 +5,7 @@
 
 USING_XLOGIC
 
-class game_handler : public listener_handler {
+class game_handler : public inner_handler {
 public:
     virtual bool check_address(struct sockaddr *sa, int socklen);
     virtual void on_new_agent(agent* ag);

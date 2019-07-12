@@ -1,6 +1,7 @@
 #ifndef __SERVER_MESSAGE_H__
 #define __SERVER_MESSAGE_H__
 
+#include <vector>
 #include "type_def.h"
 
 enum INNER_MESSAGE {
@@ -93,10 +94,6 @@ struct message_broadcast : public inner_message_head {
         length = sizeof(message_broadcast);
         broadcast_count = 0;
     }
-
-    void set_broadcast_size(uint32_t b_size) {
-        broadcast_count = b_size;
-    }
 };
 
 struct message_subscribe : public inner_message_head {
@@ -118,12 +115,17 @@ struct message_server_close : public inner_message_head {
 #pragma pack(pop)       //恢复对齐状态
 
 // 打包函数
-static message_sock_new * make_message_sock_new(uint32_t session_id);
-static message_sock_close * make_message_sock_close(uint32_t session_id);
-static message_sock_auth * make_message_sock_auth(uint64_t user_id, uint64_t player_id, uint32_t role_id, uint32_t session_id);
-static message_forward * make_message_forward(uint32_t session_id, void *data, uint32_t len);
-static message_broadcast * make_message_broadcast(uint64_t *session_array, uint32_t count, void *data, uint32_t len);
-static message_server_close * make_message_server_close();
-static void destroy_message(inner_message_head *msg);
+ message_sock_new * make_message_sock_new(uint32_t session_id);
+ message_sock_close * make_message_sock_close(uint32_t session_id);
+ message_sock_auth * make_message_sock_auth(uint64_t user_id, uint64_t player_id, uint32_t role_id, uint32_t session_id);
+ message_forward * make_message_forward(uint32_t session_id, void *data, uint32_t len);
+ message_broadcast * make_message_broadcast(uint64_t *session_array, uint32_t count, void *data, uint32_t len);
+ message_subscribe * make_message_subscribe(uint32_t subscribe_id);
+ message_server_close * make_message_server_close();
+// 解包
+ void parse_message_forward(void *data, uint32_t len, uint32_t &session_id, void **real_data, uint32_t &real_len);
+ void parse_message_broadcast(void *data, uint32_t len, std::vector<uint32_t> &sessions, void **real_data, uint32_t &real_len);
+
+ void destroy_message(inner_message_head *msg);
 
 #endif // __SERVER_MESSAGE_H__

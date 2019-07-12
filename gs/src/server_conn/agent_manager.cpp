@@ -64,3 +64,11 @@ void agent_manager::auth_agent_by_session_id(uint32_t session_id, uint64_t user_
     }
     cli_ag->auth(true);
 }
+
+bool agent_manager::send_by_session(uint32_t session_id, void *data, int len) { 
+    agent * ag = agent_manager::get_instance()->get_agent_by_session_id(session_id);
+    if (ag) {
+        return ag->send(data, len);
+    }
+    return false;
+}

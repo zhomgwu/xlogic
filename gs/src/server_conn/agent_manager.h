@@ -21,6 +21,8 @@ public:
     agent *get_agent_by_session_id(uint32_t session_id);
     void auth_agent_by_session_id(uint32_t session_id, uint64_t user_id, uint64_t player_id);
 
+    bool send_by_session(uint32_t session_id, void *data, int len);
+
 private:
     static agent_manager *          m_instance;
     uint32_t                        m_session_generator;

@@ -63,7 +63,7 @@ private:
 	// std::map<int, listener*> m_inner_listeners;				// 服务器连接
 };
 
-extern agent * g_game_agent;
-extern agent * g_login_agent;
+extern agent* g_game_agent;
+extern agent* g_login_agent;
 
 #endif // __SERVER_H__

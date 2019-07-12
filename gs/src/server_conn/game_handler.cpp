@@ -23,24 +23,5 @@ void game_handler::on_disconnect(agent* ag) {
 }
 
 void game_handler::on_message(agent* ag, void *data, int len) {
-    // 来自游戏服务的信息，一般情况下直接发送给客户端
-    inner_message_head * head = (inner_message_head *)data;
-    
-    switch(head->message_id) {
-        case INNER_MSG_FORWARD: {
-            message_forward * forward = (message_forward*)data;
-            agent_manager::get_instance()->get_agent_by_session_id(forward->session_id);
-            break;
-        }
-        case INNER_MSG_BROADCAST: {
-            
-            break;
-        }
-        case INNER_MSG_SUBSCRIBE: {
-            
-            break;
-        }
-    }
-
-
+    inner_handler::on_message(ag, data, len);
 }
