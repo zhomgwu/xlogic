@@ -14,7 +14,7 @@ class my_handler : public connector_handler {
 public:
     virtual void on_connect_success(connector *conn) override {
 
-        message_head head;
+        client_message_head head;
         head.length = sizeof(head);
         head.message_id = 12311;
         conn->send(&head, sizeof(head));
@@ -31,7 +31,7 @@ public:
     }
 
 	virtual void on_message(connector *conn, void * data, uint32_t length) override {
-        message_head *head = (message_head*)data;
+        client_message_head *head = (client_message_head*)data;
 
         LOGDEBUG("on message %d", length);
         LOGDEBUG("on message :%d, message id:%d", head->length, head->message_id );

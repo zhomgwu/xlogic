@@ -94,8 +94,8 @@ bool server::init_server_config(std::string path) {
         return false;
     }
     
-    if (yaml_node["server_conn"].IsDefined()) {
-        YAML::Node node = yaml_node["server_conn"];
+    if (yaml_node["server_game"].IsDefined()) {
+        YAML::Node node = yaml_node["server_game"];
         if (node["client_listener"].IsDefined()) {
             m_config.client_listener_port = node["client_listener"].as<uint16_t>();
         }

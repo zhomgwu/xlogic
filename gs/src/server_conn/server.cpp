@@ -10,10 +10,6 @@
 
 USING_XLOGIC
 
-
-agent * g_game_agent = nullptr;
-agent * g_login_agent = nullptr;
-
 server::server ()
 : m_poller(nullptr) {
 

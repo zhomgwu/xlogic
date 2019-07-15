@@ -39,3 +39,15 @@ player *player_manager::get_player(uint64_t player_id) {
     return nullptr;
 }
 
+player* player_manager::new_player() {
+    return nullptr;
+}
+
+void player_manager::save_player(uint64_t player_id) {
+
+}
+
+void player_manager::save_player(player * pr) {
+
+}
+

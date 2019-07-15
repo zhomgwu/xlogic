@@ -1,7 +1,7 @@
 #ifndef __INNER_HANDLER_H__
 #define __INNER_HANDLER_H__
 
-#include "inner_handler.h"
+#include "listener.h"
 
 USING_XLOGIC
 

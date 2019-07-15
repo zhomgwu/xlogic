@@ -3,22 +3,21 @@
 #include "logger_manager.h"
 #include "agent_manager.h"
 
-extern agent * g_game_agent;
-
+agent * game_handler::m_game_agent = nullptr;
 bool game_handler::check_address(struct sockaddr *sa, int socklen) {
     return true;
 }
 
 void game_handler::on_new_agent(agent* ag) {
-    if (g_game_agent) {
+    if (m_game_agent) {
         LOGERROR("game agent has been existed!");
         return;
     }
-    g_game_agent = ag;
+    m_game_agent = ag;
 }
 
 void game_handler::on_disconnect(agent* ag) {
-    g_game_agent = nullptr;
+    m_game_agent = nullptr;
     LOGWARN("game agent was disconnected!");
 }
 

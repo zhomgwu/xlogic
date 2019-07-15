@@ -1,7 +1,7 @@
 #ifndef __GAME_HANDLER_H__
 #define __GAME_HANDLER_H__
 
-#include "listener.h"
+#include "inner_handler.h"
 
 USING_XLOGIC
 
@@ -11,6 +11,8 @@ public:
     virtual void on_new_agent(agent* ag);
     virtual void on_disconnect(agent* ag);
     virtual void on_message(agent* ag, void *data, int len);
+
+    static agent * m_game_agent;
 };
 
 #endif //__GAME_HANDLER_H__

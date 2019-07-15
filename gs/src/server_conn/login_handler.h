@@ -9,6 +9,9 @@ public:
     virtual void on_new_agent(agent* ag);
     virtual void on_disconnect(agent* ag);
     virtual void on_message(agent* ag, void *data, int len);
+
+private:
+    static agent * m_login_agent;
 };
 
 #endif //__LOGIN_HANDLER_H__

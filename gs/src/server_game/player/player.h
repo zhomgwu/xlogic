@@ -7,9 +7,13 @@ public:
     ~player();
 
 public:
+    
     bool init();
+    bool send2client(void *data, int len);
+  
+private:
 
-
+    uint32_t m_session_id;
 };
 
 #endif

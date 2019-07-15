@@ -30,17 +30,22 @@ struct user_info {
 // 客户端与服务器的包头
 struct message_head {
     uint16_t length;            // 消息长度，包括头部
+};
+
+// 客户端与服务器的包头
+struct client_message_head : public message_head {
     uint16_t message_id;        // 消息id
 };
 
 // 特殊包头例子，继承于message_head
 struct special_message_head : public message_head {
-    uint32_t encrypt_key;
+    uint16_t message_id;        // 消息id
+    uint32_t encrypt_key;       // 解密key
 };
 
 // 服务器与服务器的包头
 struct inner_message_head : public message_head {
-
+    uint16_t message_id;        // 消息id
 };
 
 struct message_sock_new : public inner_message_head {
