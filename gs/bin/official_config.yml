@@ -19,26 +19,28 @@ server_global:
 # 连接服务器配置
 server_conn :
   client_listener : 6101
-  _game_listener : 6102
-  _login_listener : 6103
-  _chat_listener : 6104
   max_client : 2000
   
 # 游戏服务器配置
 server_game :
+  listener : 6201
   is_gm_enable : false
 
 # 登录服务器配置
 server_login :
-  listener : 6201
+  listener : 6301
 
 # 战斗服务器配置
 server_war :
-  listener : 6301
+  listener : 6401
+
+# 聊天服务器配置
+server_chat:
+  listener : 6501
 
 # 数据库配置
 server_db :
-  listener : 6401
+  listener : 6901
   mysql_db_name : "game_db"
   mysql_addr : "127.0.0.1"
   mysql_port : 3306

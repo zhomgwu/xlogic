@@ -3,17 +3,16 @@
 #include "server_message.h"
 #include "agent_manager.h"
 
-bool inner_handler::check_address(struct sockaddr *sa, int socklen) {
-    return true;
+void inner_handler::on_connect_success(connector *conn) {
 }
 
-void inner_handler::on_new_agent(agent* ag) {
+void inner_handler::on_connect_fail(connector *conn) {
 }
 
-void inner_handler::on_disconnect(agent* ag) {
+void inner_handler::on_disconnect(connector *conn) {
 }
 
-void inner_handler::on_message(agent* ag, void *data, int len) {
+void inner_handler::on_message(connector *conn, void *data, uint32_t len) {
     // 来自游戏服务的信息，一般情况下直接发送给客户端
     inner_message_head * head = (inner_message_head *)data;
     
@@ -43,7 +42,7 @@ void inner_handler::on_message(agent* ag, void *data, int len) {
         // 消息订阅
         case INNER_MSG_SUBSCRIBE: {
             message_subscribe * msg = (message_subscribe*)data;
-            message_subscription::get_instance()->subscribe(msg->subscribe_id, ag);
+            message_subscription::get_instance()->subscribe(msg->subscribe_id, conn);
             break;
         }
         default: {

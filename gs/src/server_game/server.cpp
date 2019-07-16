@@ -80,10 +80,8 @@ void server::on_signal(int signo) {
 
 bool server::init_server_config(std::string path) {
     // 默认配置
-    m_config.client_listener_port = 6001;
-    m_config.game_listener_port = 6002;
-    m_config.login_listener_port = 6003;
-    m_config.max_client = 6004;
+    m_config.listener = 6201;
+    m_config.is_gm_enable = false;
 
     YAML::Node yaml_node;
     try {
@@ -96,17 +94,11 @@ bool server::init_server_config(std::string path) {
     
     if (yaml_node["server_game"].IsDefined()) {
         YAML::Node node = yaml_node["server_game"];
-        if (node["client_listener"].IsDefined()) {
-            m_config.client_listener_port = node["client_listener"].as<uint16_t>();
+        if (node["listener"].IsDefined()) {
+            m_config.listener = node["listener"].as<uint16_t>();
         }
-        if (node["_game_listener"].IsDefined()) {
-            m_config.game_listener_port = node["_game_listener"].as<uint16_t>();
-        }
-        if (node["_login_listener"].IsDefined()) {
-            m_config.login_listener_port = node["_login_listener"].as<uint16_t>();
-        }
-        if (node["max_client"].IsDefined()) {
-            m_config.max_client = node["max_client"].as<uint16_t>();
+        if (node["is_gm_enable"].IsDefined()) {
+            m_config.is_gm_enable = node["is_gm_enable"].as<bool>();
         }
     }
     return true;

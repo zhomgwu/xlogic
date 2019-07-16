@@ -33,6 +33,8 @@ public:
 	virtual bool send(void *data, int length);
 	virtual void do_recv();
 
+	std::string get_host();
+	uint16_t get_port();
 	bool is_connecting();
 	connector_handler * get_handler();
 

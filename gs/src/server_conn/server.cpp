@@ -4,8 +4,8 @@
 #include "yaml-cpp/yaml.h"
 #include "logger_manager.h"
 #include "client_handler.h"
-#include "login_handler.h"
-#include "game_handler.h"
+#include "login_connector_handler.h"
+#include "game_connector_handler.h"
 #include "agent_manager.h"
 
 USING_XLOGIC
@@ -85,8 +85,10 @@ void server::on_signal(int signo) {
 bool server::init_server_config(std::string path) {
     // 默认配置
     m_config.client_listener_port = 6001;
-    m_config.game_listener_port = 6002;
-    m_config.login_listener_port = 6003;
+    m_config.game_host = "127.0.0.1";
+    m_config.game_port = 6101;
+    m_config.login_host = "127.0.0.1";
+    m_config.login_port = 6201;
     m_config.max_client = 6004;
 
     YAML::Node yaml_node;
@@ -97,22 +99,31 @@ bool server::init_server_config(std::string path) {
         LOGERROR("open yaml file error, path=%s", path.c_str());
         return false;
     }
-    
+    // 本地监听，监听玩家连接
     if (yaml_node["server_conn"].IsDefined()) {
         YAML::Node node = yaml_node["server_conn"];
         if (node["client_listener"].IsDefined()) {
             m_config.client_listener_port = node["client_listener"].as<uint16_t>();
         }
-        if (node["_game_listener"].IsDefined()) {
-            m_config.game_listener_port = node["_game_listener"].as<uint16_t>();
-        }
-        if (node["_login_listener"].IsDefined()) {
-            m_config.login_listener_port = node["_login_listener"].as<uint16_t>();
-        }
         if (node["max_client"].IsDefined()) {
             m_config.max_client = node["max_client"].as<uint16_t>();
         }
     }
+    // 游戏服务器
+    if (yaml_node["server_game"].IsDefined()) {
+        YAML::Node node = yaml_node["server_game"];
+        if (node["listener"].IsDefined()) {
+            m_config.game_port = node["listener"].as<uint16_t>();
+        }
+    }
+    // 登录服务器
+    if (yaml_node["server_login"].IsDefined()) {
+        YAML::Node node = yaml_node["server_login"];
+        if (node["listener"].IsDefined()) {
+            m_config.game_port = node["listener"].as<uint16_t>();
+        }
+    }
+
     return true;
 }
 
@@ -135,15 +146,15 @@ bool server::init_network() {
         return false;
     }
     // game服务器监听
-    m_game_listener = new listener();
-    if (!m_game_listener->init(m_poller->get_event_base(), m_config.game_listener_port, new game_handler())
-        || !m_game_listener->listen()) {
+    m_game_connector = new connector();
+    if (!m_game_connector->init(m_poller->get_event_base(), m_config.game_host, m_config.game_port, new game_connector_handler())
+        || !m_game_connector->connect()) {
         return false;
     }
     // login服务器监听
-    m_login_listener = new listener();
-    if (!m_login_listener->init(m_poller->get_event_base(), m_config.login_listener_port, new login_handler())
-        || !m_login_listener->listen()) {
+    m_login_connector = new connector();
+    if (!m_login_connector->init(m_poller->get_event_base(), m_config.login_host, m_config.login_port, new login_connector_handler())
+        || !m_login_connector->connect()) {
         return false;
     }
     

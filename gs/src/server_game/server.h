@@ -18,10 +18,8 @@ enum ServerStatus {
 };
 
 struct server_config {
-	uint16_t client_listener_port;
-	uint16_t game_listener_port;
-	uint16_t login_listener_port;
-	uint16_t max_client;
+	uint16_t listener;
+	bool is_gm_enable;
 };
 
 class server : public signal_handler {

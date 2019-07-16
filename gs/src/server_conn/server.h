@@ -19,8 +19,10 @@ enum ServerStatus {
 
 struct server_config {
 	uint16_t client_listener_port;
-	uint16_t game_listener_port;
-	uint16_t login_listener_port;
+	std::string game_host;
+	uint16_t game_port;
+	std::string login_host;
+	uint16_t login_port;
 	uint16_t max_client;
 };
 
@@ -56,8 +58,8 @@ private:
 	poller * m_poller;										// 网络轮询器
 
 	listener * m_client_listener;							// 客户端监听器
-	listener * m_game_listener;								// 游戏服监听
-	listener * m_login_listener;							// 登录服监听
+	connector * m_game_connector;							// 游戏服连接器
+	connector * m_login_connector;							// 登录服连接器
 };
 
 #endif // __SERVER_H__

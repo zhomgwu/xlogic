@@ -21,6 +21,6 @@ message GW_WAR_RESULT {
 // CMD_WG_WAR_RESULT
 message WG_WAR_RESULT {
     uint32 result = 1;
-    WarInfo war_info = 2;
+    WarInfo war_info = 2; 
 };
 

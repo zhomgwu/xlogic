@@ -103,6 +103,14 @@ void connector::do_recv() {
     }
 }
 
+std::string connector::get_host() {
+    return m_host;
+}
+
+uint16_t connector::get_port() {
+    return m_port;
+}
+
 bool connector::is_connecting() {
     return m_is_connecting;
 }
