@@ -23,14 +23,14 @@ void message_subscription::destroy() {
     }
 }
 
-void message_subscription::subscribe(uint32_t msg_id, agent * ag) {
-    m_subscription.insert({msg_id, ag});
+void message_subscription::subscribe(uint32_t msg_id, isocket *sock) {
+    m_subscription.insert({msg_id, sock});
 }
 
-void message_subscription::unsubscribe(uint32_t msg_id, agent * ag) {
+void message_subscription::unsubscribe(uint32_t msg_id, isocket *sock) {
     auto pos = m_subscription.begin();
     while(pos != m_subscription.end()) {
-        if (pos->first == msg_id && pos->second == ag) {
+        if (pos->first == msg_id && pos->second == sock) {
             m_subscription.erase(msg_id);
             break;
         }
@@ -41,10 +41,10 @@ void message_subscription::unsubscribe(uint32_t msg_id) {
     m_subscription.erase(msg_id);
 }
 
-void message_subscription::unsubscribe(agent *ag) {
+void message_subscription::unsubscribe(isocket *sock) {
     auto pos = m_subscription.begin();
     while(pos != m_subscription.end()) {
-        if (pos->second == ag) {
+        if (pos->second == sock) {
             pos = m_subscription.erase(pos);
         }
         else {
@@ -53,9 +53,9 @@ void message_subscription::unsubscribe(agent *ag) {
     }
 }
 
-void message_subscription::get_subscription(uint32_t msg_id, std::vector<agent *> &agents) {
+void message_subscription::get_subscription(uint32_t msg_id, std::vector<isocket *> &socks) {
     auto pos_range = m_subscription.equal_range(msg_id);
     for (auto i = pos_range.first; i != pos_range.second; ++i) {
-        agents.push_back(i->second);
+        socks.push_back(i->second);
     }
 }

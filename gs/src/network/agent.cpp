@@ -37,8 +37,15 @@ void agent::do_recv() {
 	}
 }
 
-bool agent::send(void * data, uint32_t len) {
-	if (0 != bufferevent_write(m_bufferevent, data, len)) {
+void agent::close() {
+	if (m_bufferevent) {
+        bufferevent_free(m_bufferevent);
+        m_bufferevent = nullptr;
+    }
+}
+
+bool agent::send(void * data, int length) {
+	if (0 != bufferevent_write(m_bufferevent, data, (size_t)length)) {
 		return false;
 	}
 	return true;

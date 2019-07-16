@@ -9,7 +9,12 @@ server_info :
 server_global:
   global_addr : "192.168.12.91"
   global_port : 8989
-  global_key : "wearechampion"
+  global_access_key : "wearechampion"
+  mysql_db_name : "global_db"
+  mysql_addr : "127.0.0.1"
+  mysql_port : 3306
+  mysql_user : "root"
+  mysql_passwd : "123456"
 
 # 连接服务器配置
 server_conn :
@@ -34,9 +39,9 @@ server_war :
 # 数据库配置
 server_db :
   listener : 6401
+  mysql_db_name : "game_db"
   mysql_addr : "127.0.0.1"
   mysql_port : 3306
   mysql_user : "root"
   mysql_passwd : "123456"
 
- 

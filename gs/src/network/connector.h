@@ -6,6 +6,7 @@
 #include "event2/event.h"
 #include "type_def.h"
 #include "noncopyable.h"
+#include "isocket.h"
 
 XLOGIC_BEGIN
 
@@ -19,7 +20,7 @@ public:
 };
 
 class message_processor;
-class connector : public noncopyable {
+class connector : public noncopyable , public isocket {
 public:
 	connector();
 	virtual ~connector();
@@ -29,7 +30,7 @@ public:
 	virtual bool init(struct event_base * base, std::string host, uint16_t port, connector_handler * handler);
 	virtual bool connect(uint32_t timeout = 0);
 	virtual void close();
-	virtual bool send(void *data, uint32_t length);
+	virtual bool send(void *data, int length);
 	virtual void do_recv();
 
 	bool is_connecting();

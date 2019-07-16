@@ -22,8 +22,8 @@ mesasge PlayerInfo {
     uint32 cp_zone_id = 15;                     // 亲密空间
 
     uint32 online_time = 80;                    // 累计在线
-    uint32 login_ts = 81;                       // 登入时间
-    uint32 logout_ts = 82;                      // 登出时间
+    uint64 login_ts = 81;                       // 登入时间
+    uint64 logout_ts = 82;                      // 登出时间
 };
 
 // 玩家信息，只包括部分显示信息

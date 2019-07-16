@@ -77,8 +77,8 @@ void connector::close() {
     }
 }
 
-bool connector::send(void *data, uint32_t length) {
-    if (0 != bufferevent_write(m_bufferevent, data, length)) {
+bool connector::send(void *data, int length) {
+    if (0 != bufferevent_write(m_bufferevent, data, (size_t)length)) {
         return false;
     }
     return true;

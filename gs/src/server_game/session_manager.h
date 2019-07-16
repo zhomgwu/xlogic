@@ -1,6 +1,11 @@
 #ifndef __SESSION_MANAGER_H__
 #define __SESSION_MANAGER_H__
 
+#include <unordered_map>
+#include "network.h"
+
+USING_XLOGIC
+
 class session_manager {
 private:
     session_manager();
@@ -14,7 +19,8 @@ public:
 
 private:
     static session_manager *m_instance;
-    std::map<uint32_t, uint64_t> m_session2player;
+    std::unordered_map<uint32_t, connector *>   m_session2connector;          // session对应的连接，可能有多个conn server
+    std::unordered_map<uint32_t, uint64_t>      m_session2player;             // session对应的玩家
 };
 
 #endif //__SESSION_MANAGER_H__

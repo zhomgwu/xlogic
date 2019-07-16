@@ -1,14 +1,15 @@
 #ifndef __AGENT_H__
 #define __AGENT_H__
 
-#include "noncopyable.h"
-#include "type_def.h"
 #include "event2/bufferevent.h"
+#include "type_def.h"
+#include "noncopyable.h"
+#include "isocket.h"
 
 XLOGIC_BEGIN
 
 class message_processor;
-class agent : public noncopyable {
+class agent : public noncopyable, public isocket {
 public:
 	agent(struct bufferevent *bev);
 	virtual ~agent();
@@ -16,7 +17,8 @@ public:
 public:
 
 	virtual void do_recv();
-	virtual bool send(void * data, uint32_t len);
+    virtual void close();
+	virtual bool send(void * data, int length);
 	struct bufferevent * get_bufferevent();
     message_processor * get_socket_message_processor();
 

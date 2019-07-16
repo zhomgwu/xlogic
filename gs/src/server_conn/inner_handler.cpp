@@ -46,6 +46,9 @@ void inner_handler::on_message(agent* ag, void *data, int len) {
             message_subscription::get_instance()->subscribe(msg->subscribe_id, ag);
             break;
         }
+        default: {
+            break;
+        }
     }
 }
 
