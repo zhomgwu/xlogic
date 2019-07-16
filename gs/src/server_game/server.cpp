@@ -3,6 +3,7 @@
 #include <thread>
 #include "yaml-cpp/yaml.h"
 #include "logger_manager.h"
+#include "conn_listener_handler.h"
 
 USING_XLOGIC
 
@@ -80,7 +81,7 @@ void server::on_signal(int signo) {
 
 bool server::init_server_config(std::string path) {
     // 默认配置
-    m_config.listener = 6201;
+    m_config.conn_listener = 6201;
     m_config.is_gm_enable = false;
 
     YAML::Node yaml_node;
@@ -94,8 +95,8 @@ bool server::init_server_config(std::string path) {
     
     if (yaml_node["server_game"].IsDefined()) {
         YAML::Node node = yaml_node["server_game"];
-        if (node["listener"].IsDefined()) {
-            m_config.listener = node["listener"].as<uint16_t>();
+        if (node["conn_listener"].IsDefined()) {
+            m_config.conn_listener = node["conn_listener"].as<uint16_t>();
         }
         if (node["is_gm_enable"].IsDefined()) {
             m_config.is_gm_enable = node["is_gm_enable"].as<bool>();
@@ -109,16 +110,24 @@ bool server::init_network() {
         LOGERROR("network poller initialized already");
         return false;
     }
-    m_poller = new poller();
-    if (!m_poller->init()) {
-        SAFE_DELETE(m_poller);
-        return false;
-    }
-
+    do {
+        m_poller = new poller();
+        if (!m_poller->init()) {
+            LOGERROR("init network m_poller error!");
+            break;
+        }
+        m_conn_listener = new listener();
+        if (!m_conn_listener->init(m_poller->get_event_base(), m_config.conn_listener, new conn_listener_handler())
+            || !m_conn_listener->listen()) {
+            LOGERROR("init network m_conn_listener error!");
+            break;
+        }
+        return true;
+    }while(false);
     
-    
-
-    return true;
+    SAFE_DELETE(m_poller);
+    SAFE_DELETE(m_conn_listener);
+    return false;
 }
 
 bool server::init_db() {

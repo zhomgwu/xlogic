@@ -23,16 +23,16 @@ server_conn :
   
 # 游戏服务器配置
 server_game :
-  listener : 6201
+  conn_listener : 6201
   is_gm_enable : false
 
 # 登录服务器配置
 server_login :
-  listener : 6301
+  conn_listener : 6301
 
 # 战斗服务器配置
 server_war :
-  listener : 6401
+  game_listener : 6401
 
 # 聊天服务器配置
 server_chat:

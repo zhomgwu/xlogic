@@ -18,7 +18,7 @@ enum ServerStatus {
 };
 
 struct server_config {
-	uint16_t listener;
+	uint16_t conn_listener;
 	bool is_gm_enable;
 };
 
@@ -52,7 +52,8 @@ private:
 	game_looper * m_app_looper;								// 游戏固定回调
 	poller * m_poller;										// 网络轮询器
 
-	connector * m_conn_connector;							// 网关服代理
+	listener * m_conn_listener;								// 网关服代理
+	connector * m_db_connector;								// 数据库代理
 };
 
 #endif // __SERVER_H__

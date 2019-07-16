@@ -1,7 +1,7 @@
 #ifndef __CLIENT_HANDLER_H_
 #define __CLIENT_HANDLER_H_
 
-#include "listener.h"
+#include "network.h"
 
 USING_XLOGIC
 
