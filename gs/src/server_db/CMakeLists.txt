@@ -23,4 +23,5 @@ TARGET_LINK_LIBRARIES(${EXEC_NAME}
  yaml-cpp
  event
  pthread
+ mysqlclient
 )

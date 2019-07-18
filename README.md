@@ -11,6 +11,9 @@ apt install g++
 安装 autoconf
 apt install autoconf
 
+安装 mysqlclient-dev
+apt install libmysqlclient-dev
+
 ####### 先编译第三方库
 ```
 cd third_party

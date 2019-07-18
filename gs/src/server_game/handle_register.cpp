@@ -2,6 +2,10 @@
 #include "logger_manager.h"
 #include "server_message.h"
 
+static void subcribe_conn_cmd(uint32_t cmd) {
+    
+}
+
 handle_register::handle_register() {
 }
 

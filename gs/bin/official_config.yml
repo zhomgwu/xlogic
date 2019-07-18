@@ -40,10 +40,10 @@ server_chat:
 
 # 数据库配置
 server_db :
-  listener : 6901
-  mysql_db_name : "game_db"
+  game_listener : 6901
   mysql_addr : "127.0.0.1"
   mysql_port : 3306
   mysql_user : "root"
   mysql_passwd : "123456"
+  mysql_db_name : "game_db"
 
