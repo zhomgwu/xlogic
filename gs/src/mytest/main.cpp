@@ -7,6 +7,7 @@
 #include "poller.h"
 #include "get_opt.h"
 #include "yaml-cpp/yaml.h"
+#include "mysql_connection.h"
 
 void test_logger_manager() {
     logger_manager::get_instance()->init_log("./log");
@@ -72,6 +73,18 @@ void test_yaml() {
 
 }
 
+void test_mysql() {
+    mysql_connection * mysql = new mysql_connection();
+    if (mysql->connect("192.168.12.91", 3306, "root", "123456", "game_db")){
+        LOGDEBUG("connect mysql success");
+    } else {
+        LOGDEBUG("connect mysql fail");
+        mysql->close();
+    }
+    mysql->insert("insert into player(player_id, gold) values (123123123, 10000)");
+
+}
+
 int main(int argc, char *argv[]) {
     get_opt opt(argc, (const char**)argv);
     // 后台启动
@@ -91,6 +104,9 @@ int main(int argc, char *argv[]) {
     }
     if (opt.has("-yaml")) {
         test_yaml();
+    }
+    if (opt.has("-mysql")) {
+        test_mysql();
     }
     
     return 0;
