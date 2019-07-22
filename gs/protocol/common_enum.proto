@@ -1,15 +1,18 @@
-
 syntax = "proto3";
 
 package Stardom;
 
-enum ErrorCode {
-    EC_SUCCESS = 0;                         // 成功
-    EC_APP_VERSION = 1;                     // 版本不符合
-    EC_TOKEN = 2;                           // token有误
-    EC_NOT_PLAYERS = 3;                     // 新用户，没有玩家
-
-    EC_PLAYER_NOTFOUND = 1001;              // 用户不存在
-    EC_PLAYER_LEVEL = 1002;                 // 用户等级不足
-
+// 物品类型
+enum ThingType {
+    THING_TYPE_ITEM,
+    THING_TYPE_EQUIP,
+    THING_TYPE_CHIP,
+    THING_TYPE_STONE,
+    THING_TYPE_ACTOR,
 };
+
+
+
+
+
+

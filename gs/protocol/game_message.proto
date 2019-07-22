@@ -22,6 +22,11 @@ message SC_LOGIN {
     string succ_token = 3;                      // 登录成功的token
 };
 
+// CMD_CS_ACTOR_LIST
+message CS_ACTOR_LIST {
+    uint32 params = 1;                          // 不需要，预留消息体
+};
+
 // CMD_SC_ACTOR_LIST
 message SC_ACTORLIST {
     message ActorChooseInfo {
@@ -50,6 +55,13 @@ message SC_CREATEACTOR {
 message SC_PLAYER_INFO {
     PlayerInfo player_info = 1;                 // 个人信息  
 };
+
+// CMD_SC_EQUIP_INFO
+message SC_EQUIP_INFO {
+    // repeated EquipInfo equip_info = 1;          // 装备信息
+};
+
+
 
 // CMD_CS_ACTOR_INFO
 message CS_ACTOR_INFO {

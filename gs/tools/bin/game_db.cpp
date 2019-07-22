@@ -188,29 +188,31 @@ void db_opr_player::build_insert_statment(std::string &statment) {
 }
 
 void db_opr_player::build_update_statment(std::string &statment) {
-	UPDATE player SET player_id=m_pb_player.player_id(), 
-name=m_pb_player.name(), 
-picture=m_pb_player.picture(), 
-faction=m_pb_player.faction(), 
-sex=m_pb_player.sex(), 
-prof=m_pb_player.prof(), 
-level=m_pb_player.level(), 
-exp=m_pb_player.exp(), 
-vip_level=m_pb_player.vip_level(), 
-offical_pos=m_pb_player.offical_pos(), 
-power=m_pb_player.power(), 
-cash=m_pb_player.cash(), 
-gold=m_pb_player.gold(), 
-copper=m_pb_player.copper(), 
-cp_zone_id=m_pb_player.cp_zone_id(), 
-online_time=m_pb_player.online_time(), 
-login_ts=m_pb_player.login_ts(), 
-logout_ts=m_pb_player.logout_ts(), 
-WHERE id=m_pb_player.id()
+	statment = "UPDATE player SET "+
+	"player_id=" + m_pb_player.player_id()
+	", player_id=" + m_pb_player.player_id()
+	", name=" + m_pb_player.name()
+	", picture=" + m_pb_player.picture()
+	", faction=" + m_pb_player.faction()
+	", sex=" + m_pb_player.sex()
+	", prof=" + m_pb_player.prof()
+	", level=" + m_pb_player.level()
+	", exp=" + m_pb_player.exp()
+	", vip_level=" + m_pb_player.vip_level()
+	", offical_pos=" + m_pb_player.offical_pos()
+	", power=" + m_pb_player.power()
+	", cash=" + m_pb_player.cash()
+	", gold=" + m_pb_player.gold()
+	", copper=" + m_pb_player.copper()
+	", cp_zone_id=" + m_pb_player.cp_zone_id()
+	", online_time=" + m_pb_player.online_time()
+	", login_ts=" + m_pb_player.login_ts()
+	", logout_ts=" + m_pb_player.logout_ts()
+	+" WHERE "+"id=" + m_pb_player.id();
 }
 
 void db_opr_player::build_delete_statment(std::string &statment) {
-	db_opr_player
+	statment = "DELETE FROM player WHERE "+"id=" + m_pb_player.id();
 }
 
 void db_opr_player::build_insert_or_update_statment(std::string &statment) {

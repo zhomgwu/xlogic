@@ -369,26 +369,61 @@ void ${class_name}::build_insert_or_update_statment(std::string &statment) {
 }
 
 		)";
-		
+
+				auto build_readres_func = [&](std::vector<std::string>& field_types, std::vector<std::string>& field_names)->std::string {
+					std::string code = "\n";
+					
+
+					return code;
+				};
+
 				auto build_update_func = [&](std::vector<std::string>& field_types, std::vector<std::string>& field_names)->std::string {
-					std::string statment = "UPDATE " + table_name + " SET ";
+					std::string code = "statment = \"UPDATE " + table_name + " SET \"+\n";
+					bool first = true;
 					for (size_t i = 0; i < field_types.size(); ++i) {
 						if (PriKeys.find(field_names[i]) != PriKeys.end()) {
 							continue;
 						}
-						statment += field_names[i] + "=" + data_member + "." + field_names[i] + "(), \n"; 
+						// 第一行不需要','号，看不懂代码因为是根据输出增删
+						if (first) {
+							first = false;
+							code += "\t\"" + field_names[i] + "=\" + " + data_member + "." + field_names[i] + "()\n"; 	
+						} else {
+							code += "\t\", " + field_names[i] + "=\" + " + data_member + "." + field_names[i] + "()\n"; 	
+						}
 					}
-					statment += "WHERE ";
+					code += "\t+\" WHERE \"+";
 					for (auto key : PriKeys) {
-						statment += key +"="+data_member + "."+ key +"()";
+						code += "\"" + key +"=\" + "+data_member + "."+ key +"()";
 					}
-					return statment;
+					code += ";";
+					return code;
 				};
 
-				// auto build_select_func = [&]() {
+				auto build_delete_func = [&]()->std::string {
+					std::string code;
+					code = "statment = \"DELETE FROM "+table_name;
+					code += " WHERE \"+";
+					bool first = true;
+					for (auto key : PriKeys) {
+						if (first) {
+							first = false;
+							code += "\"" + key +"=\" + "+data_member + "."+ key +"()";	
+						} else {
+							code += "\" AND " + key +"=\" + "+data_member + "."+ key +"()";	
+						}						
+					}
+					code += ";";
+					return code;
+				};
 
-				// };
+				auto build_select_func = [&]() {
+					std::string code;
+					code = "select * from"
+				};
+
 				std::string updatestatment = build_update_func(hub_field_types, hub_field_names);
+				std::string delstatment = build_delete_func();
 				char szBuf[40960] = {};
 				// std::string table_name_UP = table_name;
 				// std::transform(table_name_UP.begin(), table_name_UP.end(), table_name_UP.begin(), ::toupper);
@@ -397,7 +432,7 @@ void ${class_name}::build_insert_or_update_statment(std::string &statment) {
 				replace_string(output_format, "${data_member}", data_member);
 				sprintf(szBuf, output_format.c_str(), cpp_set_functions.c_str(), cpp_get_functions.c_str(),
 				 	class_name.c_str(), class_name.c_str(), class_name.c_str(), updatestatment.c_str(), 
-				 	class_name.c_str(), class_name.c_str());
+				 	delstatment.c_str(), class_name.c_str());
 				output_cpp += szBuf;
 				printf("%s", szBuf);
  			}

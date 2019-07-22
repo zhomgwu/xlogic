@@ -8,17 +8,20 @@ enum GAME_CMD {
 
     CMD_CS_LOGIN                        = 101;      // 登录请求
     CMD_SC_LOGIN                        = 102;      // 登录回应
-    CMD_SC_ACTOR_LIST                   = 103;      // 角色列表
+    CMD_CS_ACTOR_LIST                   = 103;      // 请求角色列表
+    CMD_SC_ACTOR_LIST                   = 104;      // 角色列表
 
-    CMD_CS_CREATE_ACTOR                 = 104;      // 创建角色
-    CMD_SC_CREATE_ACTOR                 = 105;      // 角色回应
+    CMD_CS_CREATE_ACTOR                 = 105;      // 创建角色
+    CMD_SC_CREATE_ACTOR                 = 106;      // 角色回应
 
-    CMD_SC_PLAYER_INFO                  = 106;      // 自己信息
-    CMD_SC_EQUIP_INFO                   = 108;
-    CMD_SC_ITEM_INFO                    = 109;
-    CMD_SC_STONE_INFO                   = 110;
-    CMD_SC_CHIP_INFO                    = 111;
-    CMD_SC_GUILD_INFO                   = 112;
+    CMD_SC_PLAYER_INFO                  = 107;      // 基本信息
+    CMD_SC_EQUIP_INFO                   = 108;      // 装备信息
+    CMD_SC_ITEM_INFO                    = 109;      // 普通物品信息
+    CMD_SC_STONE_INFO                   = 110;      // 宝石信息
+    CMD_SC_CHIP_INFO                    = 111;      // 碎片信息
+    CMD_SC_GUILD_INFO                   = 112;      // 公会信息
+    CMD_SC_STAGE_INFO                   = 113;      // 关卡信息
+    CMD_SC_TASK_INFO                    = 114;      // 任务信息
 
     CMD_CS_ACTOR_INFO                   = 120;      // 查看玩家信息
     CMD_SC_ACTOR_INFO                   = 121;      // 玩家信息
